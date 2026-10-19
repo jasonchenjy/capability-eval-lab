@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling==1.32.4"]
+build-backend = "hatchling.build"
+
+[project]
+name = "capability-eval-lab"
+version = "0.1.0"
+description = "Experimental capability-driven coding-agent evaluations"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+research = [
+    "petri-dish==0.3.4",
+    "petri-bloom==0.2.6",
+    "inspect-petri==3.1.1",
+    "inspect-ai==0.3.282",
+]
+
+[dependency-groups]
+dev = ["pytest==9.1.1"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/capability_eval"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/docs", "/evals", "/configs", "/README.md", "/pyproject.toml", "/uv.lock"]

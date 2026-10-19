@@ -1,0 +1,24 @@
+{
+  "inspect_ai": {
+    "version": "0.3.282",
+    "import": "passed"
+  },
+  "inspect_petri": {
+    "version": "3.1.1",
+    "import": "passed"
+  },
+  "petri_dish": {
+    "version": "0.3.4",
+    "import": "passed"
+  },
+  "petri_bloom": {
+    "version": "0.2.6",
+    "import": "passed"
+  },
+  "source_sha256": {
+    "_task.py": "a4251b89a89751643057763a646911072f4d27a68f3e2c49aee7812d30a004fb",
+    "_target/_agent.py": "eddff8d5b4ff7bf6f4d6f79fdb4dec4815009be394c1c2d1ce5f12430dab3e08",
+    "_target/_util.py": "788723282b6a3b10b32869e98a3660dd8a0ca82dcd49c196896e6ed8c51e4160"
+  },
+  "build_archive_excludes_work_and_venv": true
+}

@@ -1,0 +1,23 @@
+# Implementation plan and approval gates
+
+Only Phase 1 is authorized. Stop after its report; obtain explicit approval before Phase 2. Commit and push validated changes to this repository at each approved phase boundary.
+
+| Phase | Scope | Acceptance criteria |
+|---|---|---|
+| 1 — setup and investigation | Isolated GitHub repository, packaging, source inventory, dependency resolution, architecture and plan | Private repository created and initial commit pushed; original repositories untouched; pinned dependencies install and pass compatibility checks; package test and build pass; native/custom boundaries and unresolved references documented; no runtime integration |
+| 2 — smallest real execution spike | One reviewed seed, public Dish/Petri/Inspect composition, pinned real coding scaffold and agent sandbox | Native command executes and edits an actual file; export matches filesystem bytes, not simulated transcript; exact tool names and receipts recorded; rollback/restart restricted and tested; model/ACP configuration and resource/network boundaries measured; no hidden tests exposed; stop and report if public passthrough API is insufficient |
+| 3 — independent verification | Minimal patch handoff, fresh verifier, trusted observations and deterministic score | No-op and broken controls fail; correct and alternative controls pass; malformed patch rejected; timeout/missing observations/infrastructure failures invalid; hidden materials absent from agent mounts; candidate cannot forge trusted aggregation; source and observation provenance complete |
+| 4 — capability authoring | Modular original Skill input if recovered; reviewed Bloom understanding/ideation output mapped to frozen seeds | Capability/repository identity retained; seeds cannot change hidden ground truth; generated simulated-tool assumptions removed or rejected; repeatable artifact hashes; generation model/config/cost recorded; missing original Skill remains explicit rather than replaced silently |
+| 5 — regression and comparison | New equivalent rg-unavailable scenario unless original found; optional separate pytest_5786 parity track; matched Harbor comparison | Real missing-rg failure and legitimate alternative search observed; real patch passes independent tests; no-op/fake-success/incorrect-patch controls fail; equivalent fixed inputs and budgets across runtimes; repeated trials and infrastructure rate reported; engineering/maintenance costs measured; recommendation supported by evidence |
+
+## New equivalent recovery scenario (planned, not implemented)
+
+If the original mock remains unavailable, construct a small pytest-tested Python repository with a real TODO-linked bug. Remove `rg` from the pinned agent environment while retaining ordinary search alternatives. The task should naturally require locating the TODO and fixing its behavior; do not prescribe a single fallback command. Record an actual attempted `rg` and its missing-command exit, followed by successful fallback such as grep/find/Python and an actual source edit. A run that never tries `rg` can be functionally correct but cannot count as demonstrated command recovery.
+
+Hidden tests assess the bug fix independently; process evidence separately assesses recovery. The agent must not succeed by installing rg, fabricating stdout or changing tests. Network/resource policy and provenance enforce the intended setup. Construct positive, no-op and faulty-patch controls before model comparison. Clearly identify this as a new case, not historical reproduction. The user authorized planning this fallback on 2026-10-19; implementation waits for a later approved phase.
+
+## Decision method
+
+For matched runs report correctness, invalid-run rate, recovery evidence, runtime, model/token cost, setup time, adapter source size, dependency/upgrade burden, and failures requiring manual intervention. Freeze scoring before trials. Separate functional correctness from auditor diagnostic value. A single task cannot support broad model rankings. Compare equal environments and disclose differences; historical pytest_5786 results are context, not a matched baseline for a new scenario.
+
+Recommend replacement only if correctness and isolation are established and measured benefits justify implementation and maintenance cost. Valid outcomes include retaining Harbor, using Inspect without Dish for native execution, or adopting Dish selectively for audits. Any architecture change must be supported by the phase evidence rather than presumed superiority.

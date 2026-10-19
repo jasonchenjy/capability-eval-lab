@@ -1,0 +1,106 @@
+[
+  {
+    "sha": "25ed226b11de51ad871614dd0b995fca7a7057ae",
+    "subject": "Add RewardKit scoring with seven-control Harbor parity"
+  },
+  {
+    "sha": "cbb95a4b5bacc3efbf3041aad6dca640c5902baf",
+    "subject": "Complete B/C instruction ablation with isolated Codex account trials"
+  },
+  {
+    "sha": "293e4f709484a663abb38238ef0dcf2444426b00",
+    "subject": "Document real Codex account isolation validation in changelog"
+  },
+  {
+    "sha": "a096d5a23e0dd85ecb45e9294fd9d50806adc32c",
+    "subject": "Validate real Codex account with isolated credential broker"
+  },
+  {
+    "sha": "7bab83b060e9a1c04fe66abdb6cda4bf3949beb0",
+    "subject": "Validate offline Codex account credential boundary"
+  },
+  {
+    "sha": "24aaa9b647d6c013f464ce86f20c12a02df9f735",
+    "subject": "Record instruction ablation authorization and execution block"
+  },
+  {
+    "sha": "973aac987495bbc2006eeaf72932918dd12ee2f3",
+    "subject": "Prepare frozen pytest 5786 instruction ablation B and C"
+  },
+  {
+    "sha": "9d1ca9262c520cf83d537c980ee3dc67c4c0e7db",
+    "subject": "Assess pytest 5786 evaluation quality with diagnostic controls"
+  },
+  {
+    "sha": "e0a3148327d5f2ef3260704db77c025eb53577cb",
+    "subject": "Record first valid pytest 5786 Harbor agent pilot and analysis"
+  },
+  {
+    "sha": "2319bd478a6ed6d1603cb76093387cda4ea64c7c",
+    "subject": "Qualify Harbor coding workflow with native Codex and isolated handoff"
+  },
+  {
+    "sha": "5a7aacb84a1caedc95d390465cedbca0be670279",
+    "subject": "Record authorized pytest pilot and missing Codex tool host blocker"
+  },
+  {
+    "sha": "dcd5f18c4a5d1aae09433ce87b6abb7fef2d888d",
+    "subject": "Add isolated Harbor pilot with qualification and Codex preparation evidence"
+  },
+  {
+    "sha": "91ba92f32598d1e5bcc313c1903905f664465d64",
+    "subject": "Add Harbor two-environment spike and pytest_5786 adapter with execution evidence"
+  },
+  {
+    "sha": "17e2b8d3c6ee07e88202db9c9276bfa4e371c8ca",
+    "subject": "feat(runtime): add Colima grading boundary and archive readiness experiments"
+  },
+  {
+    "sha": "ffc25b55c0b3389ad25cc54d0b8cf9e416260762",
+    "subject": "fix(runtime): secure controller-worker file handoffs"
+  },
+  {
+    "sha": "16fe50b3b14fade8c7b7735090331ec3e25da745",
+    "subject": "feat(runtime): add isolated pytest 5786 execution and qualification pipeline"
+  },
+  {
+    "sha": "02427af2b7e30e2c45332606070a9d09b86eb9e1",
+    "subject": "docs: resolve H02 wire-layout contract and requalify controls"
+  },
+  {
+    "sha": "0f7d61daa5bc9b66224db50462e156ac629c0973",
+    "subject": "fix: isolate patch application and requalify pytest oracle"
+  },
+  {
+    "sha": "0899f0ee76e6c494a36d4d222fd79a69fb2f7ca9",
+    "subject": "chore: align delivery checksums with versioned artifacts"
+  },
+  {
+    "sha": "71089f550ed7e882478fe43c6349749c53f03dad",
+    "subject": "feat: create and qualify pytest #5786 eval v0.1.0"
+  },
+  {
+    "sha": "18a72713a754a68fd82c7739da0860bfb46503ec",
+    "subject": "Add offline Harbor trajectory analytics and stage3 diagnostics"
+  },
+  {
+    "sha": "15e9dbd7d8e1937acfa5767f3c8d0e03e1da16c7",
+    "subject": "Record one GPT-5.6 Luna pytest pilot and three-model comparison"
+  },
+  {
+    "sha": "6f96310e4b2cde7e43a81679346a9d48a096000f",
+    "subject": "Run one lowest-cost GPT-6 Luna pytest pilot and compare evidence"
+  },
+  {
+    "sha": "dbbff9d07af150b07fe87da1b17d1a9c30be667d",
+    "subject": "Reproduce pytest pilot on Mac Mini with bounded account proxy"
+  },
+  {
+    "sha": "5dcae457a0ac76f13f45b8e9e36f0a3b904c94cb",
+    "subject": "Add RewardKit scoring with seven-control Harbor parity"
+  },
+  {
+    "sha": "524ebf6d6cf104c912a6e5918689295d8138d112",
+    "subject": "Compare three historical models with outcome and process evidence"
+  }
+]

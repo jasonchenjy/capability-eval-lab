@@ -1,0 +1,29 @@
+[
+  {
+    "repository": "harbor-framework/harbor",
+    "revision": "346d04c545ddad5d171606ee9f2a3db3e5838f18",
+    "path": "skills/create-task/SKILL.md",
+    "sha256": "a9ef48a93b06744e982472e89a3e5f49a16079c3b46be2bd8873a6952a16fabc",
+    "supporting_paths": [
+      "skills/create-task/SKILL.md"
+    ],
+    "license_paths": [
+      "LICENSE"
+    ]
+  },
+  {
+    "repository": "harbor-framework/skills",
+    "revision": "b8cdcfb534b1aff65c7699eab4673530b1b4120a",
+    "path": "skills/harbor-task-creator/SKILL.md",
+    "sha256": "21465a965a0182a1efa4fe9dbef7b8da807cad735ff946210807fbb8d98aa5d1",
+    "supporting_paths": [
+      "skills/harbor-task-creator/SKILL.md",
+      "skills/harbor-task-creator/references",
+      "skills/harbor-task-creator/references/example-tasks.md",
+      "skills/harbor-task-creator/references/task-toml-reference.md"
+    ],
+    "license_paths": [
+      "LICENSE"
+    ]
+  }
+]

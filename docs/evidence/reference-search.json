@@ -1,0 +1,35 @@
+{
+  "/Users/junyu/Projects/agent-evals": {
+    "head": "91ba92f32598d1e5bcc313c1903905f664465d64",
+    "status": " M runtime/probe_container_handoff.py\n M runtime/tests/test_runtime.py\n?? runtime/agent_container.py\n?? runtime/codex_rpc.py\n?? runtime/container/agent_integration.md\n?? runtime/evidence/mac_mini_20261016/\n?? runtime/probe_agent_container.py\n?? runtime/remote_inventory.py\n?? runtime/run_container.py\n?? runtime/tests/test_agent_container.py\n",
+    "matching_commits": [],
+    "matching_paths": []
+  },
+  "/Users/junyu/Projects/evals-mac-mini": {
+    "head": "524ebf6d6cf104c912a6e5918689295d8138d112",
+    "status": "",
+    "matching_commits": [],
+    "matching_paths": []
+  },
+  "remote_branches": [
+    {
+      "branch": "feat/rewardkit-migration",
+      "head": "25ed226b11de51ad871614dd0b995fca7a7057ae",
+      "truncated": false,
+      "matches": []
+    },
+    {
+      "branch": "harbor/mac-mini-pilot-20261017",
+      "head": "18a72713a754a68fd82c7739da0860bfb46503ec",
+      "truncated": false,
+      "matches": []
+    },
+    {
+      "branch": "main",
+      "head": "5dcae457a0ac76f13f45b8e9e36f0a3b904c94cb",
+      "truncated": false,
+      "matches": []
+    }
+  ],
+  "historical_checkout_exists": false
+}
