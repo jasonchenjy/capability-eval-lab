@@ -1,6 +1,6 @@
 # Implementation plan and approval gates
 
-Phase 3 was explicitly authorized and its bounded independent-verifier experiment is documented in `phase-3-report.md`. Stop after publishing and reporting Phase 3. Phase 4 requires explicit approval. Commit and push validated changes to this repository at each approved phase boundary.
+Phase 4 was explicitly authorized and its bounded capability-authoring pipeline is documented in `phase-4-report.md`. Stop after publishing and reporting Phase 4. Phase 5 requires explicit approval. Commit and push validated changes to this repository at each approved phase boundary.
 
 | Phase | Scope | Acceptance criteria |
 |---|---|---|

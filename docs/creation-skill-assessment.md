@@ -33,3 +33,7 @@ Keep issue selection as a separate modular input: initially a curator supplies a
 The standalone skill's pytest example appends `|| true` and then reads `PIPESTATUS[0]`; this loses the failing pytest status. A local shell probe `false || true` followed by reading `PIPESTATUS[0]` returned 0. A future verifier must capture the original exit status immediately or branch directly on the command, and test a failing control.
 
 The two skills also describe different Harbor-era CLI/configuration conventions. Pin the actual tool version before using their command examples. Installing verifier dependencies at run time and uploading tests into a shared agent environment do not meet this experiment's frozen, independent-verifier contract. Missing reward data is an invalid run here, not an invented numeric reward. No upstream file was changed.
+
+## Phase 4 reuse
+
+The pinned Harbor create-task Skill is now packaged with its Apache-2.0 license and supplied to native Bloom authoring calls. Its hash is checked before use. This confirms reuse of the inspected reference, not identification of the exact historical skill. See `phase-4-report.md` for the implemented adaptation and explicit review boundary.

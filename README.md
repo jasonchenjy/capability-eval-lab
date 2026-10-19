@@ -30,4 +30,4 @@ The framework dependencies are optional under `research`; the package itself has
 
 Most `src/capability_eval/` subpackages reserve future responsibilities; `runtime/phase2.py` and `validation/phase2_evidence.py` contain the bounded execution probe and offline evidence review. The Phase 3 modules add strict patch admission, isolated execution and trusted grading for the fixed fixture. The case directory is an inventory placeholder, not an executable benchmark. The original evaluation repository is read-only reference material. Changes and future curated artifacts belong here; credentials, private tests, raw transcripts, and sensitive data must not be committed.
 
-Phase 3 was explicitly approved and executed. Stop here; Phase 4 requires explicit user approval.
+Phase 4 was explicitly approved and executed. See the [Phase 4 report](docs/phase-4-report.md) for Skill/Bloom authoring, explicit review, frozen seeds and verifier locks. Stop here; Phase 5 requires explicit user approval.

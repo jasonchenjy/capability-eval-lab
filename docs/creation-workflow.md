@@ -10,3 +10,7 @@ This Phase 1 design adapts the responsibilities described by Harbor's Apache-2.0
 6. Qualify positive, alternative, no-op and broken controls, then freeze artifacts before agent trials. Record exact source and dependency identities.
 
 Future creation input should include capability, repository URL/SHA, selected issue/specification, license/provenance, public payload allowlist and private verifier reference. Future output should include reviewed public task, frozen seed, private verification manifest and qualification evidence. These are proposed interface responsibilities, not schemas or code implemented in Phase 1.
+
+## Phase 4 implementation
+
+The original Phase 1 plan above is now implemented for the qualified curated fixture. See `phase-4-report.md`, `creation/contracts.py`, `creation/bloom.py`, `creation/ground_truth.py` and `audit/frozen_seed.py`. Review and verifier roots are independently pinned; generation does not author new hidden tests or discover issues.

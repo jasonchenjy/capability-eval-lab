@@ -1,0 +1,16 @@
+{
+  "live_bloom_calls": 3,
+  "live_bloom_seconds": 11.615,
+  "live_bloom_tokens": 13979,
+  "monetary_cost": null,
+  "reviewer_kind": "assistant",
+  "repeatable_frozen_bytes": true,
+  "ground_truth_unchanged": true,
+  "native_score": 1,
+  "no_op_score": 0,
+  "wrong_score": 0,
+  "tests_passed": 56,
+  "phase5_started": false,
+  "frozen_seed_sha256": "4beedeba629860b1b1f6a7018fe8b7930fa6e928889d2e1075855f090e9df471",
+  "verifier_lock_sha256": "b0f62b9ea7bf8ac85887d631285d1abd54502841d9c1ef5c87195e8509084d6a"
+}

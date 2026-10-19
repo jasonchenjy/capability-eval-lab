@@ -1,0 +1,12 @@
+{
+  "capability_id": "native-file-edit",
+  "capability": "Inspect a repository fixture and implement a precise requested file edit using real native tools.",
+  "repository_url": "https://github.com/jasonchenjy/capability-eval-lab",
+  "repository_revision": "e7823e275743896f706a8a56827cc0c2c09dc2f3",
+  "selected_specification": "Curated Phase 2 fixture: edit /workspace/fixture.py so VALUE is the string native-edit-confirmed. Preserve the single-file task. This fixture is materialized from the documented baseline, not a full repository checkout or mined GitHub issue.",
+  "source_kind": "curated_fixture",
+  "public_files": {
+    "fixture.py": "VALUE = \"before\"\n"
+  },
+  "public_constraints": "Offline native execution. Only modify fixture.py. Use one VALUE assignment with constants, string addition or literal string join. Keep grader and hidden tests unchanged."
+}
