@@ -1,0 +1,15 @@
+{
+  "exit_code": 2,
+  "result": {
+    "boundaries": null,
+    "checks": [],
+    "completed": 0,
+    "contract_version": 1,
+    "lock_sha256": "187c963ab9121d72613d6873dfd23707680ca90c38b300614231797c7349066e",
+    "patch_sha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96",
+    "reason": "rejected:Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+    "score": null,
+    "status": "invalid",
+    "strategy": "black-box-json-v1"
+  }
+}

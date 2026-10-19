@@ -11,3 +11,8 @@ Sources: [Harbor license](https://github.com/harbor-framework/harbor/blob/346d04
 Phase 2 installs the Apache-2.0 `@zed-industries/codex-acp==0.16.0` package in its dedicated container, with npm integrity metadata retained in the evidence. Inspect SWE 0.2.71 is reused as a pinned dependency. No original-evals implementation was copied. Docker CLI plugins were reused locally as ignored tooling; none are distributed in this repository.
 
 Phase 4 generation evidence includes native Bloom/Petri diagnostic rubric text. Their MIT notices are retained at `licenses/Petri-Bloom-MIT.txt` and `licenses/Inspect-Petri-MIT.txt`. These diagnostics do not define deterministic scoring. The new authoring adapter is original code; no prior evaluation implementation or hidden test was copied.
+
+
+## Phase 5A task source
+
+Boltons is fetched as task data at `967864f89791509f9eb36b22b4579d36b72a6df2` from https://github.com/mahmoud/boltons. The complete BSD-3-Clause LICENSE (Mahmoud Hashemi and contributors) remains in every pinned snapshot; no source tree is committed to this distribution. The private reference control applies the source fix from `d12d86a4706aa4a367a91679b0ff9b6a572e5298`, authored by Guo Jiarui in upstream PR #475. Its attribution and license are retained with the locally provisioned source; the alternative control is independently constructed using literal Unicode separators. Private solution artifacts are not distributed in this repository.
