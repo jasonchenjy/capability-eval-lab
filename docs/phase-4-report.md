@@ -81,3 +81,11 @@ Configure Docker Compose on the controller as in Phase 2; this machine uses its 
 Bloom contributes authoring drafts and diagnostic ideas, but its default conversational/simulation assumptions require explicit adaptation. The useful integration here is reviewed authoring plus a fixed native auditor, not unrestricted Bloom evaluation or a new source of correctness ground truth. Manual review and custom contract/lock code are maintenance costs to include in the future comparison. No claim is made that this replaces or improves upon Harbor.
 
 Phase 4 was explicitly authorized. Stop after committing/publishing and reporting. Do not begin Phase 5 without user approval.
+
+## Structured response review fix
+
+The fixed auditor now calls Inspect Petri's public `controller().resume()` and checks Dish response objects. Nonempty `intercepted_ids` are rejected; pending native `tool_calls` require another resume; only an output with neither completes the turn. Target prose and tool arguments are never parsed as control state. Scaffold injection notifications and unknown response types fail closed. The 24-resume bound remains enforced.
+
+Dish 0.3.4 does not publicly export its response classes, so the adapter imports its pinned internal `DishResponseOutput` and `ScaffoldInjectionNotification` types. Dependency upgrades must requalify this small compatibility boundary.
+
+Validation after this fix: 61 tests pass, including both misleading text markers with pending calls and final responses, genuine interception, scaffold injection, unknown response types and the resume bound. The real Dish/Codex ACP native smoke run was repeated using deterministic inference: the native patch scored 1; wrong and no-op controls scored 0. Seed and verifier approval roots remain unchanged. See `evidence/phase4/structured-response-fix.json`. Existing AnyIO shutdown warnings remained nonfatal. No new live-model trial or Phase 5 work was performed.

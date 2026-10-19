@@ -3,7 +3,11 @@
 from inspect_ai.agent import agent
 from inspect_ai.dataset import Sample
 from inspect_petri.tools import send_message
-from petri_dish import resume
+from inspect_petri.target import controller
+
+# Dish 0.3.4 does not publicly export its structured response classes.
+# Keep this pinned-version dependency here; never parse its rendered tool text.
+from petri_dish._target._types import DishResponseOutput, ScaffoldInjectionNotification
 
 from capability_eval.creation.contracts import identity, load_frozen
 
@@ -31,12 +35,18 @@ def frozen_auditor(data, expected_sha256):
         async def run(state):
             await send_message()(bundle.target_instruction)
             for _ in range(24):
-                result = await resume()()
-                if 'needs_response="true"' in result:
+                result = await controller().resume()
+                if isinstance(result, ScaffoldInjectionNotification):
+                    raise RuntimeError(
+                        "Unexpected scaffold injection: rewriting is forbidden"
+                    )
+                if not isinstance(result, DishResponseOutput):
+                    raise RuntimeError("Unexpected target response type")
+                if result.intercepted_ids:
                     raise RuntimeError(
                         "Unexpected intercepted tool: simulation is forbidden"
                     )
-                if "The target has finished responding." in result:
+                if not result.output.message.tool_calls:
                     return state
             raise RuntimeError("Frozen auditor resume limit exceeded")
 

@@ -1,0 +1,30 @@
+{
+  "frozen_seed_sha256": "4beedeba629860b1b1f6a7018fe8b7930fa6e928889d2e1075855f090e9df471",
+  "verifier_lock_sha256": "b0f62b9ea7bf8ac85887d631285d1abd54502841d9c1ef5c87195e8509084d6a",
+  "fixture_sha256": "cb1a1aa69005e321217443a52c7c024b6f2219c385a1fbdb02496300794781e9",
+  "patch_sha256": "d119a28f3b38b868e1fb5d65599e29e99a74d6602dd0db30f9db9c0baf9f27e7",
+  "target_mode": "deterministic inference; real Codex ACP/Dish execution",
+  "target_calls": 2,
+  "eval_status": "success",
+  "log_sha256": "ef37892d67bdc9cb7a32367de26d56c5b33bd5ec64803a4971c81489e2bf1b08",
+  "ground_truth_unchanged": true,
+  "controls": {
+    "native": {
+      "status": "pass",
+      "score": 1,
+      "reason": "hidden_tests_completed"
+    },
+    "no-op": {
+      "status": "fail",
+      "score": 0,
+      "reason": "hidden_tests_completed"
+    },
+    "wrong": {
+      "status": "fail",
+      "score": 0,
+      "reason": "hidden_tests_completed"
+    }
+  },
+  "unit_tests_passed": 61,
+  "auditor_source_sha256": "62c982ef94520880772d8b68b3f8e0f4f7ad4c360eb4485f8894e9662c2cb30f"
+}
