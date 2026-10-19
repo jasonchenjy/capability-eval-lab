@@ -89,6 +89,27 @@
     },
     {
       "accepted": true,
+      "control": "encoding-bypass",
+      "reason": "patch_rejected:source_encoding_not_utf8",
+      "score": null,
+      "status": "invalid"
+    },
+    {
+      "accepted": true,
+      "control": "deep-json",
+      "reason": "missing_or_malformed_observation",
+      "score": null,
+      "status": "invalid"
+    },
+    {
+      "accepted": true,
+      "control": "utf8-declared",
+      "reason": "hidden_tests_completed",
+      "score": 1,
+      "status": "pass"
+    },
+    {
+      "accepted": true,
       "control": "malformed",
       "reason": "patch_rejected:path_not_allowed",
       "score": null,

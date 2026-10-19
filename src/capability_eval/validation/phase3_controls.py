@@ -74,6 +74,30 @@ def run_controls(output, hidden_tests, live_patch):
             None,
             "source_attestation_failed",
         ),
+        "encoding-bypass": (
+            patch_for(
+                '# coding: unicode_escape\nVALUE = "native-edit-confirmed"\n# '
+                + r'\u000aVALUE = "wrong"\u000aimport os,json\u000aprint(json.dumps({"type":"str","value":"native-edit-confirmed"}),flush=True)\u000aos._exit(0)'
+                + "\n"
+            ),
+            "invalid",
+            None,
+            "patch_rejected:source_encoding_not_utf8",
+        ),
+        "deep-json": (
+            patch_for(
+                'import os\nprint("["*20000+"0"+"]"*20000,flush=True)\nos._exit(0)\n'
+            ),
+            "invalid",
+            None,
+            "missing_or_malformed_observation",
+        ),
+        "utf8-declared": (
+            patch_for('# coding: utf-8\n# café\nVALUE = "native-edit-confirmed"\n'),
+            "pass",
+            1,
+            "hidden_tests_completed",
+        ),
         "malformed": (
             b"not a patch\n",
             "invalid",

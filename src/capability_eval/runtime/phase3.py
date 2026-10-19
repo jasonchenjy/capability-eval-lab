@@ -10,9 +10,12 @@ from capability_eval.verifier.handoff import InvalidPatch, admit
 from capability_eval.verifier.sandbox import IMAGE, InfrastructureError, Sandbox
 
 WORKER = """
-import json, runpy
+import json
+from pathlib import Path
 try:
-    module = runpy.run_path('/workspace/fixture.py')
+    source = Path('/workspace/fixture.py').read_bytes().decode('utf-8')
+    module = {'__name__': '<run_path>', '__file__': '/workspace/fixture.py'}
+    exec(compile(source, '/workspace/fixture.py', 'exec', dont_inherit=True), module)
     value = module['VALUE']
     observation = {'type': type(value).__name__,
                    'value': value if isinstance(value, str) else repr(value)}
@@ -27,6 +30,28 @@ def digest(data):
 
 
 def strict_json(data):
+    # Bound structure before the recursive decoder runs. Delimiters inside JSON
+    # strings (including escaped quotes/backslashes) do not contribute to depth.
+    text = data.decode("utf-8") if isinstance(data, bytes) else data
+    depth = 0
+    quoted = escaped = False
+    for char in text:
+        if quoted:
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == '"':
+                quoted = False
+        elif char == '"':
+            quoted = True
+        elif char in "[{":
+            depth += 1
+            if depth > 32:
+                raise ValueError("json_depth_limit")
+        elif char in "]}":
+            depth -= 1
+
     def unique(pairs):
         result = {}
         for key, value in pairs:
@@ -35,7 +60,10 @@ def strict_json(data):
             result[key] = value
         return result
 
-    return json.loads(data, object_pairs_hook=unique)
+    try:
+        return json.loads(text, object_pairs_hook=unique)
+    except RecursionError as exc:
+        raise ValueError("json_depth_limit") from exc
 
 
 def verify(patch, *, base_sha256, hidden_tests, tests_sha256, timeout=5, image=IMAGE):

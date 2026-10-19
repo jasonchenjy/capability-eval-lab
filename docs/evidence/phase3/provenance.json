@@ -1,20 +1,23 @@
 {
+  "cli_deep_json_exit_code": 2,
   "docker_client": "29.3.0",
   "docker_server": "29.2.1",
   "executed_sources": {
     "src/capability_eval/grading/phase3.py": "1fa73bb63dd2c6e25e0796aa392182e9f77e80eb17fc34e9dae4cabd8ec6b520",
-    "src/capability_eval/runtime/phase3.py": "c91af7cc22bee086f1e6a197f0855e434d855e876b564700a3ddc859abdf9012",
-    "src/capability_eval/validation/phase3_controls.py": "679f85dcf7cf10bfce52b2e20a1b6c7ff983217a9764ba118a19f7d97cf25480",
+    "src/capability_eval/runtime/phase3.py": "69b17d571f71ae03b4c73116849891f4ddcecba05313aaa0edc21743f5e49ab2",
+    "src/capability_eval/validation/phase3_controls.py": "856a15285ce9f5843fc55962728222837014d8a280856f91b8a65d10bdb2c4ad",
     "src/capability_eval/validation/phase3_isolation.py": "9639e084d5836fd1fd4a466255ed3f416529c9e0a1aa27105a9bd95c7252e8f3",
-    "src/capability_eval/verifier/handoff.py": "afb0ca66ec28cbee4c4f261ae24f55ce7ae20e6efd39f03834719591ab00f21a",
+    "src/capability_eval/verifier/handoff.py": "1865381c9f8b74bdfa79c04ccb4ab4bd35e1677987cdc5cd38995ac0d3f9ebee",
     "src/capability_eval/verifier/sandbox.py": "1e22fc6173b50e6ba40ddeef7e74b652e14b6aedcaf22889002d24132a9ef516",
-    "tests/test_phase3_contract.py": "165eb69b885c96377f748103fa5dea57014b13ae93b40973e2adc514a9091805"
+    "tests/test_phase3_contract.py": "f7c3b2d9b82c4f6f5db6171a88c8fb50a47e70ba083db7270646f428e28fef3e"
   },
   "hidden_tests_committed": false,
   "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
   "live_model_runs_in_phase3": 0,
   "phase2_commit": "3105ab23067326377e4593ae033ab6a2e1742d82",
+  "regressions_failed_before_fix": 6,
+  "reviewed_commit": "0d6bf667e335d264d99c7cc2fae11e5ade041565",
   "unit_tests": {
-    "passed": 34
+    "passed": 45
   }
 }

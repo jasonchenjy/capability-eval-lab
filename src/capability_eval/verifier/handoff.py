@@ -1,7 +1,10 @@
 """Strict, bounded handoff for the Phase 2 one-file fixture only."""
 
+import codecs
 import hashlib
+import io
 import re
+import tokenize
 
 BASE = b'VALUE = "before"\n'
 BASE_SHA256 = hashlib.sha256(BASE).hexdigest()
@@ -51,4 +54,12 @@ def admit(patch: bytes, base_sha256: str) -> bytes:
             new.append(line[1:])
     if b"".join(old) != BASE or len(new) != int(hunk.group(1) or b"1"):
         raise InvalidPatch("hunk_mismatch")
-    return b"".join(new)
+    source = b"".join(new)
+    try:
+        encoding, _ = tokenize.detect_encoding(io.BytesIO(source).readline)
+        if codecs.lookup(encoding).name != "utf-8":
+            raise InvalidPatch("source_encoding_not_utf8")
+        source.decode("utf-8")
+    except (SyntaxError, LookupError, UnicodeError) as exc:
+        raise InvalidPatch("source_encoding_invalid") from exc
+    return source

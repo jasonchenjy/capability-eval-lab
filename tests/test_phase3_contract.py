@@ -180,3 +180,95 @@ def test_untrusted_source_cannot_forge_attested_value(source):
 
     with pytest.raises(ValueError):
         attest_source(source, {"type": "str", "value": "public-unit-test"})
+
+
+@pytest.mark.parametrize("encoding", ["unicode_escape", "utf-7", "latin-1"])
+def test_handoff_rejects_non_utf8_source_declarations(encoding):
+    source = f'# coding: {encoding}\nVALUE = "public-unit-test"\n'
+    with pytest.raises(InvalidPatch, match="source_encoding"):
+        admit(patch_for(source), BASE_SHA256)
+
+
+def test_deep_json_is_rejected_as_value_error():
+    with pytest.raises(ValueError, match="depth"):
+        phase3.strict_json(b"[" * 20000 + b"0" + b"]" * 20000)
+
+
+@pytest.mark.parametrize("role", ["candidate", "grader"])
+def test_deep_json_returns_invalid_without_escaping_verify(monkeypatch, role):
+    from capability_eval.verifier.sandbox import Execution
+
+    class FakeSandbox:
+        boundaries = {}
+
+        def __init__(self, current_role, image):
+            self.role = current_role
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            pass
+
+        def put(self, name, data):
+            pass
+
+        def python(self, script, **kwargs):
+            out = (
+                b"[" * 20000 + b"0" + b"]" * 20000
+                if self.role == role
+                else b'{"type":"str","value":"public-unit-test"}'
+            )
+            return Execution(0, out, b"")
+
+    monkeypatch.setattr(phase3, "Sandbox", FakeSandbox)
+    tests = json.dumps(TESTS).encode()
+    result = phase3.verify(
+        b"",
+        base_sha256=BASE_SHA256,
+        hidden_tests=tests,
+        tests_sha256=phase3.digest(tests),
+    )
+    assert result["status"] == "invalid" and result["score"] is None
+    assert result["reason"] == (
+        "missing_or_malformed_observation"
+        if role == "candidate"
+        else "missing_grader_observation"
+    )
+
+
+@pytest.mark.parametrize(
+    "header", ["", "# coding: utf-8\n", "#!/usr/bin/python3\n# coding: UTF_8\n"]
+)
+def test_utf8_source_is_preserved_exactly(header):
+    source = header + '# Unicode comment: café\nVALUE = "café"\n'
+    assert admit(patch_for(source), BASE_SHA256) == source.encode("utf-8")
+
+
+def test_json_depth_limit_ignores_escaped_string_content():
+    value = {"value": ('\\"[{}]' * 100), "type": "str"}
+    assert phase3.strict_json(json.dumps(value).encode()) == value
+    assert phase3.strict_json("[" * 32 + "0" + "]" * 32)
+    with pytest.raises(ValueError, match="depth"):
+        phase3.strict_json("[" * 33 + "0" + "]" * 33)
+
+
+def test_encoding_exploit_rejected_before_sandbox(monkeypatch):
+    def forbidden(*args, **kwargs):
+        pytest.fail("Encoding bypass reached execution")
+
+    monkeypatch.setattr(phase3, "Sandbox", forbidden)
+    source = (
+        '# coding: unicode_escape\nVALUE = "public-unit-test"\n# '
+        + r'\u000aVALUE = "wrong"\u000aimport os\u000aos._exit(0)'
+        + "\n"
+    )
+    tests = json.dumps(TESTS).encode()
+    result = phase3.verify(
+        patch_for(source),
+        base_sha256=BASE_SHA256,
+        hidden_tests=tests,
+        tests_sha256=phase3.digest(tests),
+    )
+    assert result["status"] == "invalid" and result["score"] is None
+    assert result["reason"] == "patch_rejected:source_encoding_not_utf8"
