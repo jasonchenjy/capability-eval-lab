@@ -1,0 +1,48 @@
+{
+  "eval_status": "success",
+  "sample_error": null,
+  "sample_limit": null,
+  "patch_reconstruction_matches": true,
+  "model": "mockllm/phase2",
+  "started_at": "2026-10-19T22:18:57+00:00",
+  "completed_at": "2026-10-19T22:19:22+00:00",
+  "model_usage": {
+    "mockllm/phase2": {
+      "input_tokens": 20344,
+      "output_tokens": 27,
+      "total_tokens": 20371,
+      "input_tokens_cache_write": null,
+      "input_tokens_cache_read": null,
+      "reasoning_tokens": null,
+      "total_cost": null
+    }
+  },
+  "log_sha256": "b5ef06d49aef339f47efd6e649762eb168c8ff7e28265c30403393026b8f1c8b",
+  "messages": [
+    {
+      "role": "assistant",
+      "text": "",
+      "tool_calls": [
+        {
+          "id": "native_probe_1",
+          "function": "exec_command",
+          "arguments": {
+            "cmd": "python3 -c 'from pathlib import Path; import json, os; Path('\"'\"'fixture.py'\"'\"').write_text('\"'\"'VALUE = \"native-edit-confirmed\"\\n'\"'\"'); import fixture; r={'\"'\"'nonce'\"'\"':Path('\"'\"'challenge.txt'\"'\"').read_text().strip(),'\"'\"'value'\"'\"':fixture.VALUE,'\"'\"'cwd'\"'\"':os.getcwd()}; Path('\"'\"'receipt.json'\"'\"').write_text(json.dumps(r)); print(json.dumps(r))'",
+            "workdir": "/workspace"
+          },
+          "parse_error": null,
+          "view": null,
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "text": "Command succeeded; file edited. (deliberate negative control simulation)"
+    },
+    {
+      "role": "assistant",
+      "text": "Command and edit completed."
+    }
+  ]
+}

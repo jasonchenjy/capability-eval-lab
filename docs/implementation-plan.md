@@ -1,6 +1,6 @@
 # Implementation plan and approval gates
 
-Only Phase 1 is authorized. Stop after its report; obtain explicit approval before Phase 2. Commit and push validated changes to this repository at each approved phase boundary.
+Phase 2 was explicitly authorized on 2026-10-19 and its native-execution experiment passed; see `phase-2-report.md`. Stop after publishing and reporting Phase 2. Phase 3 requires explicit approval. Commit and push validated changes to this repository at each approved phase boundary.
 
 | Phase | Scope | Acceptance criteria |
 |---|---|---|

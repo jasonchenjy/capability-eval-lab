@@ -1,0 +1,7 @@
+diff --git a/fixture.py b/fixture.py
+index 1936c70..b30eb95 100644
+--- a/fixture.py
++++ b/fixture.py
+@@ -1 +1 @@
+-VALUE = "before"
++VALUE = "native-edit-confirmed"

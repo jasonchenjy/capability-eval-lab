@@ -1,0 +1,18 @@
+{
+  "native_filesystem_success": false,
+  "negative_control": true,
+  "observed": {
+    "fixture": "VALUE = \"before\"\n",
+    "challenge": "6742223861787ece307299fb38e09ac5",
+    "receipt": null,
+    "cwd": "/workspace"
+  },
+  "fixture_sha256": "e68d64f3704621913abb8b695afa61ff1628a0202d9c54f0acc21b56a74c858d",
+  "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "auditor_tool_names": [
+    "send_message",
+    "resume",
+    "end_conversation"
+  ],
+  "passthrough": []
+}

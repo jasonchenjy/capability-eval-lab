@@ -1,0 +1,26 @@
+[
+  {
+    "id": "4cea10b7df50",
+    "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
+    "network_mode": "none",
+    "memory": 2147483648,
+    "nano_cpus": 1000000000,
+    "pids_limit": 128,
+    "privileged": false,
+    "cap_drop": [
+      "ALL"
+    ],
+    "security_opt": [
+      "no-new-privileges:true"
+    ],
+    "mounts": [],
+    "probe": {
+      "egress_connect_errno": 101,
+      "docker_socket_present": false,
+      "host_auth_present": false,
+      "memory_max": "2147483648",
+      "pids_max": "128",
+      "cpu_max": "100000 100000"
+    }
+  }
+]

@@ -325,6 +325,7 @@ source = { editable = "." }
 research = [
     { name = "inspect-ai" },
     { name = "inspect-petri" },
+    { name = "inspect-swe" },
     { name = "petri-bloom" },
     { name = "petri-dish" },
 ]
@@ -338,6 +339,7 @@ dev = [
 requires-dist = [
     { name = "inspect-ai", marker = "extra == 'research'", specifier = "==0.3.282" },
     { name = "inspect-petri", marker = "extra == 'research'", specifier = "==3.1.1" },
+    { name = "inspect-swe", marker = "extra == 'research'", specifier = "==0.2.71" },
     { name = "petri-bloom", marker = "extra == 'research'", specifier = "==0.2.6" },
     { name = "petri-dish", marker = "extra == 'research'", specifier = "==0.3.4" },
 ]

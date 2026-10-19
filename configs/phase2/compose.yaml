@@ -1,0 +1,14 @@
+services:
+  default:
+    image: capability-eval-phase2:0.1
+    pull_policy: never
+    init: true
+    command: ["sleep", "infinity"]
+    working_dir: /workspace
+    network_mode: none
+    cpus: 1
+    mem_limit: 2g
+    pids_limit: 128
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    x-local: true

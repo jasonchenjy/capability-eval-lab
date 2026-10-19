@@ -1,0 +1,23 @@
+{
+  "docs/evidence/phase2/executed-source.json": "295222fc89e5ba43ba9ad565967c25d0c85f40328648ce6247f546e923ebc265",
+  "docs/evidence/phase2/container-boundaries.json": "ad23e803993b92b31baac414e790a24b660acf698999626da3eaa4fd93daa798",
+  "docs/evidence/phase2/reference-read-only-check.json": "6602f5a25c84016dc03c2b3ece61bf192d69c97502c9ddfa9a0c29fff588482c",
+  "docs/evidence/phase2/environment.json": "73583f6e1ec396c9118abb498cff6df54933331885aa89370734d9fcc1586ca5",
+  "docs/evidence/phase2/native-02/submission.patch": "d119a28f3b38b868e1fb5d65599e29e99a74d6602dd0db30f9db9c0baf9f27e7",
+  "docs/evidence/phase2/native-02/result.json": "bd2261f49c41d10ab2491224330a3433f99c85d047dbcefee93f69cea1afcbd9",
+  "docs/evidence/phase2/native-02/auditor-events.json": "1d90e6ed00e81b87e7497f01823f9542b00b93bda33e2387de70e8eade6e20b6",
+  "docs/evidence/phase2/native-02/review.json": "8a45fa6380d25e06ef7eeb2516058549e8ee56bbfd5c260dd417c01e726ea6ab",
+  "docs/evidence/phase2/live-01/submission.patch": "d119a28f3b38b868e1fb5d65599e29e99a74d6602dd0db30f9db9c0baf9f27e7",
+  "docs/evidence/phase2/live-01/result.json": "2f27ede22aafe5acf132257923a5be3292dbde711334b2ea54092510d0ad0e58",
+  "docs/evidence/phase2/live-01/auditor-events.json": "9865d0f6f62bc9826e725fcd6bff85bc4c6f83ede0d7909417c561c7ae17a0ed",
+  "docs/evidence/phase2/live-01/review.json": "7c083c598f1af4d9b49800a40b74af1d5231787811ee415019845301859523c4",
+  "docs/evidence/phase2/simulated-01/submission.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "docs/evidence/phase2/simulated-01/result.json": "583d3403f0de3a0ce79b9de8b211d9224ad5b4331b54f01dbb3be79503f82448",
+  "docs/evidence/phase2/simulated-01/auditor-events.json": "34439da4fa9bf73c22b3d9e872111bdb10e13f9cf8b59c96d03396bdf8b2f23b",
+  "docs/evidence/phase2/simulated-01/review.json": "d621523ea3b827d0c82af7e96feeda4b93fe3d68b98188bfe7e5d932e2c4dfe3",
+  "src/capability_eval/runtime/phase2.py": "9d4495c57dca0ae4ff40a99b3e8e3e8b672bda738551ad54f1fde84d65d9fe0d",
+  "src/capability_eval/validation/phase2_evidence.py": "278e9f4ead9626460955433cc618573be3a09238d4291b4e31c4300e1503c50f",
+  "configs/phase2/compose.yaml": "749dd74e5eb560a357193500694964f6868e89c5feaab6ef13df5fa9910d5280",
+  "configs/phase2/Dockerfile": "ef05bd7f50dc334e1e65ab93b6eb149ac90891e18bc0b9746f41c0af07b03ff8",
+  "uv.lock": "088c45f8e840ebe2f927fc3f794f7736a1ac31608f43c5e670736a91dfd24ffc"
+}

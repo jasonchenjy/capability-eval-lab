@@ -1,0 +1,4 @@
+{
+  "harness_sha256": "529e5531b0d38d461fb8fcac61779ee68fe2940ae3631c1cc095c1ac27153613",
+  "note": "Executed source before post-run completion checks were hardened; no scaffold or inference logic changed in that hardening."
+}
