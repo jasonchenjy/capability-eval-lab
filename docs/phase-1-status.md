@@ -1,6 +1,6 @@
 # Phase 1 status
 
-Local setup and investigation are prepared. GitHub publication is pending repository creation/access; Phase 1 is not complete until the remote commit is verified. Phase 2 has not started and requires explicit user approval.
+Local setup and investigation are validated. The user created the private repository at https://github.com/jasonchenjy/capability-eval-lab. Publication of this commit is the remaining external acceptance gate at authoring time; the final chat report records its outcome. Phase 2 has not started and requires explicit user approval.
 
 Completed locally:
 
