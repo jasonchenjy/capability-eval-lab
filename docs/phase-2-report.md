@@ -38,7 +38,7 @@ After the audit, the controller reads files via a separate sandbox operation and
 
 ## Validation and discovered issues
 
-Five package/policy/completion tests pass. The completion gate rejects a successful-looking Inspect evaluation if its sample is limited, errored, missing independent observations or has a mismatched filesystem outcome. Final completion checks were replayed against all three actual logs. Offline patch reconstruction passed for each run.
+Six package/policy/completion tests pass. The post-review regression exercises the actual collection solver: an unchanged negative control passes, while a modified or empty challenge nonce fails. This regression failed before the nonce check was added and passed after it. The original model runs were not repeated for this validation-only fix. The completion gate rejects a successful-looking Inspect evaluation if its sample is limited, errored, missing independent observations or has a mismatched filesystem outcome. Final completion checks were replayed against all three actual logs. Offline patch reconstruction passed for each run.
 
 The initial `native-01` attempt failed because the image lacked `curl`, which Inspect SWE needs for MCP readiness. Adding curl fixed setup; it was an infrastructure failure, not a model failure. The successful runs emitted AnyIO object-destructor warnings during interpreter shutdown, after successful collection; they are retained in raw console logs and should be tracked as an upstream cleanup concern. There were no sample limits or errors in the three accepted runs.
 

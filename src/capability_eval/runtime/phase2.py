@@ -207,7 +207,12 @@ def task(output_dir: Path, compose: str, *, negative: bool = False):
             }
             (output_dir / "result.json").write_text(json.dumps(result, indent=2) + "\n")
             if negative:
-                if success or observed["fixture"] != BEFORE or receipt is not None:
+                if (
+                    success
+                    or observed["fixture"] != BEFORE
+                    or observed["challenge"] != nonce
+                    or receipt is not None
+                ):
                     raise RuntimeError("Simulation control unexpectedly mutated files")
             elif not success or not diff.stdout:
                 raise RuntimeError("Native filesystem proof failed")

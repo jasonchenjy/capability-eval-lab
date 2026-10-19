@@ -15,7 +15,7 @@
   "docs/evidence/phase2/simulated-01/result.json": "583d3403f0de3a0ce79b9de8b211d9224ad5b4331b54f01dbb3be79503f82448",
   "docs/evidence/phase2/simulated-01/auditor-events.json": "34439da4fa9bf73c22b3d9e872111bdb10e13f9cf8b59c96d03396bdf8b2f23b",
   "docs/evidence/phase2/simulated-01/review.json": "d621523ea3b827d0c82af7e96feeda4b93fe3d68b98188bfe7e5d932e2c4dfe3",
-  "src/capability_eval/runtime/phase2.py": "9d4495c57dca0ae4ff40a99b3e8e3e8b672bda738551ad54f1fde84d65d9fe0d",
+  "src/capability_eval/runtime/phase2.py": "0490ee19a4d085cc5958fb564ad01e4adaf21cd121df97a2147ad729b8d77069",
   "src/capability_eval/validation/phase2_evidence.py": "278e9f4ead9626460955433cc618573be3a09238d4291b4e31c4300e1503c50f",
   "configs/phase2/compose.yaml": "749dd74e5eb560a357193500694964f6868e89c5feaab6ef13df5fa9910d5280",
   "configs/phase2/Dockerfile": "ef05bd7f50dc334e1e65ab93b6eb149ac90891e18bc0b9746f41c0af07b03ff8",

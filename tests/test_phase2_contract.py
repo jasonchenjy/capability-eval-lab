@@ -40,3 +40,40 @@ def test_reported_success_cannot_override_failed_filesystem_proof(tmp_path):
     )
     with pytest.raises(RuntimeError, match="Filesystem evidence"):
         require_completed([log], tmp_path)
+
+
+def test_negative_control_requires_original_challenge(tmp_path, monkeypatch):
+    import asyncio
+    import json
+    from types import SimpleNamespace
+    from unittest.mock import AsyncMock
+
+    import pytest
+    from capability_eval.runtime import phase2
+
+    nonce = "original-challenge"
+    monkeypatch.setattr(phase2.secrets, "token_hex", lambda _: nonce)
+    observed = {
+        "fixture": phase2.BEFORE,
+        "challenge": nonce,
+        "receipt": None,
+        "cwd": "/workspace",
+    }
+    sandbox = SimpleNamespace(exec=AsyncMock())
+    monkeypatch.setattr(phase2, "sandbox", lambda: sandbox)
+    collect = phase2.task(tmp_path, "unused-compose.yaml", negative=True).solver[-1]
+    state = object()
+
+    def run_collection():
+        sandbox.exec.side_effect = [
+            SimpleNamespace(success=True, stdout=json.dumps(observed)),
+            SimpleNamespace(success=True, stdout=""),
+        ]
+        return asyncio.run(collect(state, None))
+
+    # A genuinely unchanged control must continue to pass.
+    assert run_collection() is state
+    for changed_challenge in ("modified-challenge", ""):
+        observed["challenge"] = changed_challenge
+        with pytest.raises(RuntimeError, match="Simulation control"):
+            run_collection()
