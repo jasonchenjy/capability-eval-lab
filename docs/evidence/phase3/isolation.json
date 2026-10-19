@@ -1,0 +1,76 @@
+{
+  "candidate": {
+    "boundaries": {
+      "binds": null,
+      "cap_drop": [
+        "ALL"
+      ],
+      "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "mounts": [],
+      "nano_cpus": 1000000000,
+      "network": "none",
+      "pids_limit": 64,
+      "privileged": false,
+      "readonly_rootfs": true,
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "tmpfs": {
+        "/tmp": "rw,noexec,nosuid,nodev,size=16m,uid=65534,gid=65534",
+        "/workspace": "rw,noexec,nosuid,nodev,size=8m,uid=65534,gid=65534"
+      },
+      "user": "65534:65534"
+    },
+    "observed": {
+      "candidate_present": true,
+      "cpu": "100000 100000",
+      "egress_errno": 101,
+      "hidden_tests_present": false,
+      "memory": "268435456",
+      "no_docker_socket": true,
+      "no_host_auth": true,
+      "nonroot": true,
+      "pids": "64",
+      "root_write_blocked": true
+    }
+  },
+  "grader": {
+    "boundaries": {
+      "binds": null,
+      "cap_drop": [
+        "ALL"
+      ],
+      "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "mounts": [],
+      "nano_cpus": 1000000000,
+      "network": "none",
+      "pids_limit": 64,
+      "privileged": false,
+      "readonly_rootfs": true,
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "tmpfs": {
+        "/tmp": "rw,noexec,nosuid,nodev,size=16m,uid=65534,gid=65534",
+        "/workspace": "rw,noexec,nosuid,nodev,size=8m,uid=65534,gid=65534"
+      },
+      "user": "65534:65534"
+    },
+    "observed": {
+      "candidate_present": false,
+      "cpu": "100000 100000",
+      "egress_errno": 101,
+      "hidden_tests_present": true,
+      "memory": "268435456",
+      "no_docker_socket": true,
+      "no_host_auth": true,
+      "nonroot": true,
+      "pids": "64",
+      "root_write_blocked": true
+    }
+  }
+}

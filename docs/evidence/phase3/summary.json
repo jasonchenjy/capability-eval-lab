@@ -1,0 +1,122 @@
+{
+  "all_accepted": true,
+  "base_sha256": "e68d64f3704621913abb8b695afa61ff1628a0202d9c54f0acc21b56a74c858d",
+  "containers_remaining": false,
+  "controls": [
+    {
+      "accepted": true,
+      "control": "phase2-live",
+      "reason": "hidden_tests_completed",
+      "score": 1,
+      "status": "pass"
+    },
+    {
+      "accepted": true,
+      "control": "correct",
+      "reason": "hidden_tests_completed",
+      "score": 1,
+      "status": "pass"
+    },
+    {
+      "accepted": true,
+      "control": "alternative",
+      "reason": "hidden_tests_completed",
+      "score": 1,
+      "status": "pass"
+    },
+    {
+      "accepted": true,
+      "control": "wrong",
+      "reason": "hidden_tests_completed",
+      "score": 0,
+      "status": "fail"
+    },
+    {
+      "accepted": true,
+      "control": "wrong-type",
+      "reason": "hidden_tests_completed",
+      "score": 0,
+      "status": "fail"
+    },
+    {
+      "accepted": true,
+      "control": "no-op",
+      "reason": "hidden_tests_completed",
+      "score": 0,
+      "status": "fail"
+    },
+    {
+      "accepted": true,
+      "control": "syntax-error",
+      "reason": "candidate_exception",
+      "score": 0,
+      "status": "fail"
+    },
+    {
+      "accepted": true,
+      "control": "timeout",
+      "reason": "timeout",
+      "score": null,
+      "status": "invalid"
+    },
+    {
+      "accepted": true,
+      "control": "missing-observation",
+      "reason": "missing_or_malformed_observation",
+      "score": null,
+      "status": "invalid"
+    },
+    {
+      "accepted": true,
+      "control": "forged-score",
+      "reason": "observation_schema_mismatch",
+      "score": null,
+      "status": "invalid"
+    },
+    {
+      "accepted": true,
+      "control": "output-limit",
+      "reason": "output_limit",
+      "score": null,
+      "status": "invalid"
+    },
+    {
+      "accepted": true,
+      "control": "forged-observation",
+      "reason": "source_attestation_failed",
+      "score": null,
+      "status": "invalid"
+    },
+    {
+      "accepted": true,
+      "control": "malformed",
+      "reason": "patch_rejected:path_not_allowed",
+      "score": null,
+      "status": "invalid"
+    },
+    {
+      "accepted": true,
+      "control": "path-traversal",
+      "reason": "patch_rejected:path_not_allowed",
+      "score": null,
+      "status": "invalid"
+    },
+    {
+      "accepted": true,
+      "control": "infrastructure",
+      "reason": "docker_operation_failed",
+      "score": null,
+      "status": "invalid"
+    },
+    {
+      "accepted": true,
+      "control": "isolation",
+      "reason": "isolation_verified",
+      "score": null,
+      "status": "pass"
+    }
+  ],
+  "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
+  "phase2_patch_sha256": "d119a28f3b38b868e1fb5d65599e29e99a74d6602dd0db30f9db9c0baf9f27e7",
+  "tests_sha256": "1e5acb5530fe386b44adee24b5217f283531ccc383779925d05ba23b522457c7"
+}

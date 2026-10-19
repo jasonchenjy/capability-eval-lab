@@ -1,0 +1,81 @@
+{
+  "base_sha256": "e68d64f3704621913abb8b695afa61ff1628a0202d9c54f0acc21b56a74c858d",
+  "boundaries": {
+    "candidate": {
+      "binds": null,
+      "cap_drop": [
+        "ALL"
+      ],
+      "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "mounts": [],
+      "nano_cpus": 1000000000,
+      "network": "none",
+      "pids_limit": 64,
+      "privileged": false,
+      "readonly_rootfs": true,
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "tmpfs": {
+        "/tmp": "rw,noexec,nosuid,nodev,size=16m,uid=65534,gid=65534",
+        "/workspace": "rw,noexec,nosuid,nodev,size=8m,uid=65534,gid=65534"
+      },
+      "user": "65534:65534"
+    },
+    "grader": {
+      "binds": null,
+      "cap_drop": [
+        "ALL"
+      ],
+      "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "mounts": [],
+      "nano_cpus": 1000000000,
+      "network": "none",
+      "pids_limit": 64,
+      "privileged": false,
+      "readonly_rootfs": true,
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "tmpfs": {
+        "/tmp": "rw,noexec,nosuid,nodev,size=16m,uid=65534,gid=65534",
+        "/workspace": "rw,noexec,nosuid,nodev,size=8m,uid=65534,gid=65534"
+      },
+      "user": "65534:65534"
+    }
+  },
+  "candidate_sha256": "09cbf5ae13a643a9b023da1035c60c5018731d5d9633a86d61b19b4e3f3aa7eb",
+  "contract": "phase2-fixture-value-v1",
+  "execution": {
+    "limit": null,
+    "returncode": 0,
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 31,
+    "stdout_sha256": "ff4577044d0f4edadb350b671546b11622d8b2ae6ede3fe8dca78d1561365e7d"
+  },
+  "grader_execution": {
+    "limit": null,
+    "returncode": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "998609165bcc7e9b96a558c2b6a4ad2451876b8975dbcc5dd84199a078c7d199"
+  },
+  "grader_script_sha256": "6f1e051bae2722fed906d8b99169ea150434f3b734ce7b889851ee3002a98838",
+  "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
+  "observation": {
+    "type": "int",
+    "value": "42"
+  },
+  "passed": 0,
+  "patch_sha256": "1d4f04eb012384b90a2042e3d27757b96697357a1c7851fab3c3543595885ebc",
+  "reason": "hidden_tests_completed",
+  "score": 0,
+  "status": "fail",
+  "tests_sha256": "1e5acb5530fe386b44adee24b5217f283531ccc383779925d05ba23b522457c7",
+  "total": 2,
+  "worker_sha256": "52afc12bb530e899250b13884471712e61e4bf050c836bddaa2005c22d319575"
+}

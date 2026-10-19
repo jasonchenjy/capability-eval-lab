@@ -2,7 +2,7 @@
 
 An independent experiment to test whether Petri Dish and Inspect AI can replace the Harbor runtime for capability-driven coding-agent evaluations while adding auditor capabilities. No superiority claim is made.
 
-Phase 2 validates real command execution and file edits through Dish passthrough and the Codex ACP scaffold, with deterministic controls and one live account-backed run. Independent hidden-test grading is not implemented. See the [Phase 2 report](docs/phase-2-report.md).
+Phase 2 validates real command execution and file edits through Dish passthrough and the Codex ACP scaffold, with deterministic controls and one live account-backed run. Phase 3 adds separate candidate/grader containers, private declarative tests and deterministic scoring for the same restricted fixture; see the [Phase 3 report](docs/phase-3-report.md). See the [Phase 2 report](docs/phase-2-report.md).
 
 Target flow: repository + capability → eval creation → auditor seed → Dish + Inspect → coding agent → patch → independent hidden-test sandbox → scoring + validation.
 
@@ -28,6 +28,6 @@ The framework dependencies are optional under `research`; the package itself has
 - [Attribution and reuse](docs/attribution.md)
 - [Phase 1 status](docs/phase-1-status.md)
 
-Most `src/capability_eval/` subpackages reserve future responsibilities; `runtime/phase2.py` and `validation/phase2_evidence.py` contain the bounded execution probe and offline evidence review. The case directory is an inventory placeholder, not an executable benchmark. The original evaluation repository is read-only reference material. Changes and future curated artifacts belong here; credentials, private tests, raw transcripts, and sensitive data must not be committed.
+Most `src/capability_eval/` subpackages reserve future responsibilities; `runtime/phase2.py` and `validation/phase2_evidence.py` contain the bounded execution probe and offline evidence review. The Phase 3 modules add strict patch admission, isolated execution and trusted grading for the fixed fixture. The case directory is an inventory placeholder, not an executable benchmark. The original evaluation repository is read-only reference material. Changes and future curated artifacts belong here; credentials, private tests, raw transcripts, and sensitive data must not be committed.
 
-Phase 2 was explicitly approved and executed. Stop here; Phase 3 requires explicit user approval.
+Phase 3 was explicitly approved and executed. Stop here; Phase 4 requires explicit user approval.

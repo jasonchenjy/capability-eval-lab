@@ -1,0 +1,81 @@
+{
+  "base_sha256": "e68d64f3704621913abb8b695afa61ff1628a0202d9c54f0acc21b56a74c858d",
+  "boundaries": {
+    "candidate": {
+      "binds": null,
+      "cap_drop": [
+        "ALL"
+      ],
+      "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "mounts": [],
+      "nano_cpus": 1000000000,
+      "network": "none",
+      "pids_limit": 64,
+      "privileged": false,
+      "readonly_rootfs": true,
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "tmpfs": {
+        "/tmp": "rw,noexec,nosuid,nodev,size=16m,uid=65534,gid=65534",
+        "/workspace": "rw,noexec,nosuid,nodev,size=8m,uid=65534,gid=65534"
+      },
+      "user": "65534:65534"
+    },
+    "grader": {
+      "binds": null,
+      "cap_drop": [
+        "ALL"
+      ],
+      "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "mounts": [],
+      "nano_cpus": 1000000000,
+      "network": "none",
+      "pids_limit": 64,
+      "privileged": false,
+      "readonly_rootfs": true,
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "tmpfs": {
+        "/tmp": "rw,noexec,nosuid,nodev,size=16m,uid=65534,gid=65534",
+        "/workspace": "rw,noexec,nosuid,nodev,size=8m,uid=65534,gid=65534"
+      },
+      "user": "65534:65534"
+    }
+  },
+  "candidate_sha256": "f5268657e437bd793037cf8091d76bc89ceeb7471946d484348669dfa63feeca",
+  "contract": "phase2-fixture-value-v1",
+  "execution": {
+    "limit": null,
+    "returncode": 0,
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 50,
+    "stdout_sha256": "bccc605abde2f0f2bb4f8e8f271ea2eb18406b6d95dcf60bf468ce2325cd7dfe"
+  },
+  "grader_execution": {
+    "limit": null,
+    "returncode": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "cf2c65e66378bca82a94bab76084e1aa979f7047d2d45d02a3dd3b04228de0b2"
+  },
+  "grader_script_sha256": "b4cbf06fdd69cf31a6aa460f62d6bb428ebf2a29df81fa328fa0327282ef2ce7",
+  "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
+  "observation": {
+    "type": "str",
+    "value": "native-edit-confirmed"
+  },
+  "passed": 2,
+  "patch_sha256": "1b7ca54a9c28d2fad875578318372d88d31d3f8a1c23150e7dc9f313534efd8d",
+  "reason": "hidden_tests_completed",
+  "score": 1,
+  "status": "pass",
+  "tests_sha256": "1e5acb5530fe386b44adee24b5217f283531ccc383779925d05ba23b522457c7",
+  "total": 2,
+  "worker_sha256": "52afc12bb530e899250b13884471712e61e4bf050c836bddaa2005c22d319575"
+}

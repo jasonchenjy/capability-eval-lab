@@ -1,0 +1,45 @@
+{
+  "base_sha256": "e68d64f3704621913abb8b695afa61ff1628a0202d9c54f0acc21b56a74c858d",
+  "boundaries": {
+    "candidate": {
+      "binds": null,
+      "cap_drop": [
+        "ALL"
+      ],
+      "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "mounts": [],
+      "nano_cpus": 1000000000,
+      "network": "none",
+      "pids_limit": 64,
+      "privileged": false,
+      "readonly_rootfs": true,
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "tmpfs": {
+        "/tmp": "rw,noexec,nosuid,nodev,size=16m,uid=65534,gid=65534",
+        "/workspace": "rw,noexec,nosuid,nodev,size=8m,uid=65534,gid=65534"
+      },
+      "user": "65534:65534"
+    }
+  },
+  "candidate_sha256": "3efdafcaebabcfdcd2d532fbf06805d51ffaa550c15e53122cf861251796120b",
+  "contract": "phase2-fixture-value-v1",
+  "execution": {
+    "limit": null,
+    "returncode": 0,
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 26,
+    "stdout_sha256": "7d89b8be77ed1612af281dac0623361b4fb8c665a432f22fdf55b3f69a44d1c6"
+  },
+  "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
+  "patch_sha256": "bfea2927ff618d72b3d616dd3dc595bf2786ddd1bb778ce6413394e2e1de895d",
+  "reason": "candidate_exception",
+  "score": 0,
+  "status": "fail",
+  "tests_sha256": "1e5acb5530fe386b44adee24b5217f283531ccc383779925d05ba23b522457c7",
+  "worker_sha256": "52afc12bb530e899250b13884471712e61e4bf050c836bddaa2005c22d319575"
+}

@@ -1,0 +1,12 @@
+{
+  "base_sha256": "e68d64f3704621913abb8b695afa61ff1628a0202d9c54f0acc21b56a74c858d",
+  "boundaries": {},
+  "contract": "phase2-fixture-value-v1",
+  "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
+  "patch_sha256": "ea7bd6692141d03324a5cb3c2f07b198bed524fbb93a1511164c35a9572639ad",
+  "reason": "patch_rejected:path_not_allowed",
+  "score": null,
+  "status": "invalid",
+  "tests_sha256": "1e5acb5530fe386b44adee24b5217f283531ccc383779925d05ba23b522457c7",
+  "worker_sha256": "52afc12bb530e899250b13884471712e61e4bf050c836bddaa2005c22d319575"
+}

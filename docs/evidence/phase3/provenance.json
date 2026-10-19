@@ -1,0 +1,20 @@
+{
+  "docker_client": "29.3.0",
+  "docker_server": "29.2.1",
+  "executed_sources": {
+    "src/capability_eval/grading/phase3.py": "1fa73bb63dd2c6e25e0796aa392182e9f77e80eb17fc34e9dae4cabd8ec6b520",
+    "src/capability_eval/runtime/phase3.py": "c91af7cc22bee086f1e6a197f0855e434d855e876b564700a3ddc859abdf9012",
+    "src/capability_eval/validation/phase3_controls.py": "679f85dcf7cf10bfce52b2e20a1b6c7ff983217a9764ba118a19f7d97cf25480",
+    "src/capability_eval/validation/phase3_isolation.py": "9639e084d5836fd1fd4a466255ed3f416529c9e0a1aa27105a9bd95c7252e8f3",
+    "src/capability_eval/verifier/handoff.py": "afb0ca66ec28cbee4c4f261ae24f55ce7ae20e6efd39f03834719591ab00f21a",
+    "src/capability_eval/verifier/sandbox.py": "1e22fc6173b50e6ba40ddeef7e74b652e14b6aedcaf22889002d24132a9ef516",
+    "tests/test_phase3_contract.py": "165eb69b885c96377f748103fa5dea57014b13ae93b40973e2adc514a9091805"
+  },
+  "hidden_tests_committed": false,
+  "image": "sha256:2688969f72923b9f2a60704f8504b0e13b9c28f3968e57e68e0f95da2a7aad5e",
+  "live_model_runs_in_phase3": 0,
+  "phase2_commit": "3105ab23067326377e4593ae033ab6a2e1742d82",
+  "unit_tests": {
+    "passed": 34
+  }
+}
