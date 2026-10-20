@@ -1,0 +1,17 @@
+services:
+  default:
+    image: sha256:ef2aae0ee216247ca9f380ae0b801d6961949da431210922a89e484c0324bb72
+    pull_policy: never
+    init: true
+    user: "65534:65534"
+    tmpfs:
+      - /workspace:rw,noexec,nosuid,nodev,size=16m,uid=65534,gid=65534
+    command: ["sleep", "infinity"]
+    working_dir: /workspace
+    network_mode: none
+    cpus: 1
+    mem_limit: 2g
+    pids_limit: 128
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    x-local: true

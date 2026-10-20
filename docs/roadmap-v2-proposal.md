@@ -1,6 +1,6 @@
 # Roadmap v2 proposal — decision before Phase 5
 
-**Status: Architecture v2 approved with amendments; Phase 5A authorized on 2026-10-19. Later milestones remain proposals.** Baseline `6a441fc21a67ad59e0e8660ebb63228c7502f636`, 2026-10-19. This document supplements, and does not edit or supersede, [the existing implementation plan](implementation-plan.md). Phase 5A may now begin; no 5B/5C or later work is authorized. Architecture and contracts are specified in [architecture-v2-proposal.md](architecture-v2-proposal.md).
+**Status: Architecture v2 approved with amendments; Phase 5A complete and Phase 5B authorized. Phase 5C and later milestones remain proposals.** The original proposal baseline is `6a441fc21a67ad59e0e8660ebb63228c7502f636`, 2026-10-19. This document supplements [the existing implementation plan](implementation-plan.md), preserving the original proposal and subsequent decision history below. Architecture and contracts are specified in [architecture-v2-proposal.md](architecture-v2-proposal.md).
 
 ## Decision on original Phase 5
 
@@ -78,3 +78,13 @@ LangChain eval-engineering guidance may help later discovery and qualification, 
 ## Approval record — 2026-10-19
 
 The user approved Architecture v2 with a first-class central Evaluation Scenario Designer and an extensible, versioned Verifier Contract. The original roadmap is preserved in [the decision archive](decisions/original-roadmap-v2-proposal.md). Phase 5A is GO under its seven existing acceptance criteria. The designer remains manually curated/design-only; only a narrow black-box strategy is implemented. Repository Test Verifier remains design-only with a separate threat model; no universal AST interpreter or generic plugin framework is authorized. A bounded JSON adapter over a real repository API is allowed by the black-box contract; future coding tasks need not use this interface. Stop after validated 5A changes are committed/pushed and reported. No live models, interactive auditor, Harbor comparison or 5B/5C implementation.
+
+## Subsequent authorization — Phase 5B
+
+After the 5A review fixes, the user authorized Phase 5B environment/evidence
+qualification using deterministic controls and a passive auditor only. See
+[Phase 5B report](phase-5b-report.md) for the scoped native observer, command
+vocabulary, conditions, acceptance evidence and remaining threat-model limits.
+This subsequent authorization supersedes the earlier *execution status* saying
+5B was unapproved, while preserving that historical decision. Phase 5C and live
+model calls remain unapproved; no interactive auditor is implemented.

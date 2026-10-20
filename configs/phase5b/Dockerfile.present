@@ -1,0 +1,2 @@
+FROM capability-eval-phase2:0.1
+RUN apt-get update && apt-get install -y --no-install-recommends ripgrep=13.0.0-4+b2 && rm -rf /var/lib/apt/lists/*

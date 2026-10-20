@@ -1,6 +1,6 @@
 # Architecture v2 proposal — capability experiments
 
-**Status: Architecture v2 APPROVED with two user amendments on 2026-10-19.** Design-only review dated 2026-10-19, against `6a441fc21a67ad59e0e8660ebb63228c7502f636`. No runtime changes, dependency additions or new experiments accompany this proposal. Existing phase acceptance criteria in [implementation-plan.md](implementation-plan.md) remain unchanged. Only Phase 5A is authorized; later milestones require approval; see [roadmap-v2-proposal.md](roadmap-v2-proposal.md).
+**Status: Architecture v2 APPROVED with two user amendments on 2026-10-19.** Design-only review dated 2026-10-19, against `6a441fc21a67ad59e0e8660ebb63228c7502f636`. No runtime changes, dependency additions or new experiments accompany this proposal. Existing phase acceptance criteria in [implementation-plan.md](implementation-plan.md) remain unchanged. Phase 5A was completed and Phase 5B subsequently authorized; Phase 5C and later milestones require approval; see [roadmap-v2-proposal.md](roadmap-v2-proposal.md).
 
 ## 1. Product vision and scope
 
@@ -204,3 +204,15 @@ A verifier declares `contract_version`, `strategy`, `implementation_digest`, inp
 **Repository test verifier (design-only):** may execute candidate code with project-level tests, including pytest. Fresh execution separates the original agent but does not hide colocated test code from a hostile candidate. Qualification must address test discovery completeness, plugin/conftest/import manipulation, report/exit forgery, test-file integrity, resource limits and actual visibility; claims must explicitly state weaker secrecy/anti-tampering guarantees or demonstrate a stronger isolation mechanism. Separate strategy ID and threat model are mandatory. No repository test implementation is authorized in 5A.
 
 The Phase 3 AST verifier remains a separate legacy restricted strategy, never a universal Python evaluator. Future tasks are not required to fit CLI/JSON; tasks needing project-level testing wait for qualification of that distinct strategy.
+
+## Phase 5B implementation note
+
+The authorized deterministic recovery slice now separates native exposure,
+recovery evidence, scenario fidelity and independent task outcome. Its passive
+auditor only dispatches the public task and resumes; a pinned ACP notification
+adapter correlates native command starts/completions with Dish requests. The
+initial classifier uses a finite reviewed command vocabulary and returns unknown
+for unsupported or incomplete evidence. See [the Phase 5B report](phase-5b-report.md)
+for environment locks and the explicit trusted-scaffold/shared-UID limitation.
+This is a manually curated scenario, not an autonomous Scenario Designer or a
+general shell observer. The versioned Phase 5A black-box verifier stays unchanged.

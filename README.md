@@ -37,3 +37,9 @@ Architecture v2 is approved with the Scenario Designer and extensible verifier a
 
 
 Phase 5A review repairs use `black-box-json-v2`: only the task's inert regex literal may change, and qualification validates the externally approved scenario and every control patch. This is an explicit narrowing of accepted repairs, not general hostile-Python API attestation. See the report's review-correction section.
+
+Phase 5B is the separately authorized deterministic environment/evidence slice;
+see the [Phase 5B report](docs/phase-5b-report.md). It uses real native commands in
+pinned rg-absent/present environments, a passive auditor, and separate task and
+recovery outcomes. The finite command classifier fails closed on unsupported or
+missing evidence. No live models are called in 5B; Phase 5C remains unapproved.

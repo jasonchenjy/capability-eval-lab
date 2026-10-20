@@ -16,3 +16,11 @@ Phase 4 generation evidence includes native Bloom/Petri diagnostic rubric text. 
 ## Phase 5A task source
 
 Boltons is fetched as task data at `967864f89791509f9eb36b22b4579d36b72a6df2` from https://github.com/mahmoud/boltons. The complete BSD-3-Clause LICENSE (Mahmoud Hashemi and contributors) remains in every pinned snapshot; no source tree is committed to this distribution. The private reference control applies the source fix from `d12d86a4706aa4a367a91679b0ff9b6a572e5298`, authored by Guo Jiarui in upstream PR #475. Its attribution and license are retained with the locally provisioned source; the alternative control is independently constructed using literal Unicode separators. Private solution artifacts are not distributed in this repository.
+
+### Phase 5B environment dependency
+
+The present-rg control image installs Debian arm64 `ripgrep=13.0.0-4+b2` from
+Debian bookworm, retaining the package's copyright/license files in the image.
+No ripgrep source is vendored. The absent condition retains the pinned Phase 2
+image. The ACP observer calls installed Inspect SWE/Petri APIs and scopes a
+notification-sink override; no upstream package source is edited or copied.
