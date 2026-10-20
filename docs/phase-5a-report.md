@@ -8,7 +8,7 @@ The task uses [Boltons](https://github.com/mahmoud/boltons) at **`967864f8979150
 
 The public [instruction](../evals/boltons_unicode_lines/instruction.md) asks for the API repair without prescribing implementation or fallback tool. The full 112-file baseline, including public pytest tests and BSD-3-Clause LICENSE, is materialized from the frozen Git archive, not a provenance-only toy fixture. The source archive stays under ignored work storage; [snapshot.json](../configs/phase5a/snapshot.json) binds every file and the complete archive. All baseline Git entries are regular 100644 files. The execution snapshot deliberately applies read-only permissions except the allowed source path.
 
-Only `boltons/strutils.py` may be replaced. The private reference control uses the upstream fix with attribution; the alternative control uses literal Unicode separators and has different bytes. Both preserve all other repository files. The task is manually curated; an autonomous Scenario Designer is not implemented.
+Current contract v2 permits only the pattern string literal within `boltons/strutils.py` to change; all other bytes must remain frozen. The private reference control uses the upstream fix with attribution; the alternative control uses literal Unicode separators and has different bytes. Both preserve all other repository files. The task is manually curated; an autonomous Scenario Designer is not implemented.
 
 ## Architecture changes and implementation scope
 
@@ -22,19 +22,19 @@ The manually provisioned private suite and solution controls were created by thi
 
 ## Acceptance results
 
-The final qualification run is `work/phase5a/qualification-02`; curated evidence is in [evidence/phase5a](evidence/phase5a/). The first run also passed, then lock comparison was tightened to reject JSON boolean/integer equivalence and the entire control matrix was rerun on the final verifier bytes. The private suite was not tuned between runs.
+The original qualification run was `work/phase5a/qualification-02` (superseded after review; current run is `work/phase5a/qualification-v2-01`); curated evidence is in [evidence/phase5a](evidence/phase5a/). The first run also passed, then lock comparison was tightened to reject JSON boolean/integer equivalence and the entire control matrix was rerun on the final verifier bytes. The private suite was not tuned between runs.
 
 | Acceptance area | Evidence and result |
 |---|---|
 | Real task validity | Baseline/no-op fail; upstream reference and different alternative pass all 22 mandatory checks. Wrong and public-example-only overfit repairs fail. |
-| Verifier validity | Functional exception is fail/0 after all checks. Forged score, missing/malformed result, abrupt exit, excessive output, deep JSON and timeout are invalid/null. Candidate never supplies authoritative score. |
+| Verifier validity | An invalid regex raises a real API-import exception and is fail/0 after all checks. The legal catastrophic-regex control times out at runtime. Arbitrary executable payloads (forged score, missing/malformed result, abrupt exit, excessive output and deep JSON) are now rejected at admission, invalid/null, not runtime protocol tests. Candidate never supplies authoritative score. |
 | Handoff/reconstruction | Whole public repository is installed and independently collected from a real container. Reconstructed source tree matches collected bytes exactly. Actual mode changes and symlinks fail collection; traversal/extra paths, metadata changes, unsupported encoding, size and base mismatch are rejected by contract tests. |
 | Independent execution | Real Python calls in pinned container; expected results and aggregation remain host-side. No candidate imports on host. No-op and wrong controls demonstrate actual assertions, not successful-looking transcript grading. |
 | Isolation | Nonroot uid 65534; private suite paths, Docker socket and host auth unreadable; egress probe blocked; no credential environment variables. Docker inspection enforces no host binds/privilege, read-only root, dropped capabilities and bounded tmpfs/CPU/memory/PIDs. |
 | Reproducibility/provenance | Fixed Git/tree/archive, image, adapter, driver, scorer and suite identities. Repeated correct run has identical deterministic observations and outcome from a new container; lock rechecked after execution. |
-| Existing regressions | All 61 previous tests preserved; full suite now **94 passing tests**. Full src/tests Ruff check and wheel/sdist build pass. No private/work/source-checkout artifacts in packages. Original reference HEAD and worktree state unchanged. |
+| Existing regressions | All 61 previous tests preserved; full suite now **106 passing tests**. Full src/tests Ruff check and wheel/sdist build pass. No private/work/source-checkout artifacts in packages. Original reference HEAD and worktree state unchanged. |
 
-Control matrix: 17 submission controls, one repeat and one real missing-Docker-endpoint infrastructure control. The infrastructure control returns invalid/null. Separate handoff and isolation probes also pass. All candidate verification containers were removed; a final Docker name check found no `capability-phase3` containers remaining. No model usage or cost is incurred/reported.
+Current control matrix: 20 submission controls, one repeat and one real missing-Docker-endpoint infrastructure control. The infrastructure control returns invalid/null. Separate handoff and isolation probes also pass. All candidate verification containers were removed; a final Docker name check found no `capability-phase3` containers remaining. No model usage or cost is incurred/reported.
 
 For passing and ordinary failing candidates every mandatory check is executed. Invalid protocol/time/resource/transport runs terminate early and record incomplete counts, never claim all checks ran. A source exception caught by the adapter is a functional failure; abrupt exit outside the adapter cannot establish a valid response and is invalid. These semantics are frozen in the contract.
 
@@ -49,15 +49,18 @@ git -C work/phase5a/boltons archive --format=tar \
   967864f89791509f9eb36b22b4579d36b72a6df2 > work/phase5a/base.tar
 ```
 
-A trusted operator must separately provision the exact private suite and qualification patch controls. They remain locally under ignored `work/phase5a/private/`, are not in Git or distributions, and must not be exposed to a future target. Hashes are in the lock and scenario manifest. The JSON suite schema is documented in the verifier contract; creating a new suite requires a new qualification and approval root. Public synthetic unit fixtures are not the private benchmark suite.
+A trusted operator must separately provision the exact private suite and qualification patch controls. They remain locally under ignored `work/phase5a/private-v2/`, are not in Git or distributions, and must not be exposed to a future target. Hashes are in the lock and scenario manifest. The JSON suite schema is documented in the verifier contract; creating a new suite requires a new qualification and approval root. Public synthetic unit fixtures are not the private benchmark suite.
 
 ```sh
 export DOCKER_HOST=unix:///Users/junyu/.colima/default/docker.sock
 .venv/bin/python -m capability_eval.validation.phase5a \
   --archive work/phase5a/base.tar \
   --snapshot configs/phase5a/snapshot.json \
-  --private work/phase5a/private \
+  --private work/phase5a/private-v2 \
   --lock configs/phase5a/verifier-lock.json \
+  --scenario configs/phase5a/scenario.json \
+  --instruction evals/boltons_unicode_lines/instruction.md \
+  --expected-scenario "$(.venv/bin/python -c 'import json; print(json.load(open("configs/phase5a/approved-root.json"))["scenario_sha256"])')" \
   --expected-lock "$(.venv/bin/python -c 'import json; print(json.load(open("configs/phase5a/approved-root.json"))["verifier_lock_sha256"])')" \
   --output work/phase5a/qualification-NEW
 ```
@@ -76,4 +79,17 @@ Use an unused output directory. The standalone `capability_eval.verifier.phase5a
 
 ## Phase 5B readiness
 
-**Ready to request approval for 5B, not authorized to execute it.** The prerequisite real task/verifier/handoff now has passing controls and fixed provenance. 5B must separately freeze rg availability/installation policy, authoritative native command events, recovery evidence predicates and a passive structured auditor. It must distinguish successful task completion without exposure from actual recovery. The scenario manifest explicitly marks capability evidence `not_exercised` and environment/auditor control deferred. No live model calls are required for 5B qualification; 5C remains a separate gate.
+**The two review defects are repaired within the narrowed v2 contract; 5B still requires approval.** The prerequisite real task/verifier/handoff now has passing controls and fixed provenance. 5B must separately freeze rg availability/installation policy, authoritative native command events, recovery evidence predicates and a passive structured auditor. It must distinguish successful task completion without exposure from actual recovery. The scenario manifest explicitly marks capability evidence `not_exercised` and environment/auditor control deferred. No live model calls are required for 5B qualification; 5C remains a separate gate.
+
+
+## Review corrections and requalification
+
+Review of `b38d615` found (1) the candidate could read the in-process adapter request and emit a valid response without fixing either API, obtaining 22/22, and (2) qualification accepted a substituted duplicate alternative control without checking its approved hash. The original evidence is retained under `evidence/phase5a/pre-review/` and in Git at that commit; it must not be read as current security qualification.
+
+The first fix is a deliberately task-specific edit admission policy, not a response nonce or another same-process assertion. Only one inert regex string constant may differ from the approved source; all API bodies and imports remain frozen. Arbitrary source modifications, including the exact review bypass and an expression inserted into the literal slot, fail before starting a container. This ensures admitted candidates cannot add Python code to bypass actual API calls. The actual API implementation continues to be exercised in a fresh sandbox; private expected outcomes remain outside. Other otherwise-correct repair styles are now unsupported, disclosed in the public task. No universal Python/AST verifier was introduced. The two positive controls are different source spellings, not independent algorithms.
+
+The second fix validates the external scenario root and its full bindings, exact inventory and hashes of all controls, then verifies that positive controls reconstruct different trees. It uses immutable preloaded control bytes and rechecks on-disk inputs at the end. A real copied control directory with alternative replaced by correct now fails `control_digest_mismatch:alternative` before creating an output directory or executing candidates. Regression tests also reject a newly approved duplicate and differently serialized envelopes yielding the same tree.
+
+The 22-check private suite and its hash are unchanged. Correct and alternate positives still score 1; baseline/no-op/wrong/overfit and invalid-regex controls score 0; unsafe payloads are admission-invalid. The timeout control was changed to an allowed catastrophic regex so timeout remains a real runtime test. Previous arbitrary-code protocol controls now test admission, not protocol execution; their old evidence is historical. Protocol parser unit tests are retained. New lock/scenario identities intentionally replace the old approval roots because code, edit policy, public task and control corpus changed.
+
+106 tests, full lint and real control qualification pass. No live models, original-repository writes or Phase 5B work occurred. Future recovery evaluation must account for the now-explicit edit location and narrowed solution space; these may reduce natural search/exposure. No capability claim follows from this repair.

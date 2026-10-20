@@ -1,0 +1,1 @@
+{"boundaries":null,"checks":[],"completed":0,"contract_version":2,"lock_sha256":"77aeb6f9111f83c1d644d77edbd6b210da56452e0f4f2e875cbf217303f75941","patch_sha256":"a5402219c055d5441e66d65480641d6c4f8f7e5ee2afd58480e6d35b9913c4e2","reason":"rejected:pattern_must_be_one_string_literal","score":null,"status":"invalid","strategy":"black-box-json-v2"}

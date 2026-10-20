@@ -1,0 +1,14 @@
+{
+  "controller_python": "3.13.12 (main, Feb  3 2026, 17:53:27) [Clang 17.0.0 (clang-1700.6.3.2)]",
+  "platform": "macOS-15.3.1-arm64-arm-64bit-Mach-O",
+  "pytest": "9.1.1",
+  "baseline_lab_commit": "6a441fc21a67ad59e0e8660ebb63228c7502f636",
+  "source_repository_revision": "967864f89791509f9eb36b22b4579d36b72a6df2",
+  "upstream_fix": "d12d86a4706aa4a367a91679b0ff9b6a572e5298",
+  "qualification": "work/phase5a/qualification-02",
+  "tests_passed": 94,
+  "lint": "pass",
+  "build": "wheel and sdist pass",
+  "phase2_to_4_source_unchanged": true,
+  "live_model_calls": 0
+}

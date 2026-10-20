@@ -5,6 +5,7 @@ pytest strategy is implemented. Private assertions stay in this process.
 """
 
 import argparse
+import ast
 import codecs
 import hashlib
 import io
@@ -22,7 +23,8 @@ from capability_eval.verifier.sandbox import (
     docker,
 )
 
-VERSION = "black-box-json-v1"
+VERSION = "black-box-json-v2"
+EDIT_POLICY = "boltons-line-ending-literal-v1"
 PATCH_VERSION = "source-replacement-v1"
 EDIT_PATH = "boltons/strutils.py"
 MAX_SOURCE = 262144
@@ -31,6 +33,7 @@ SOURCE_PATHS = (
     "verifier/phase5a.py",
     "verifier/sandbox.py",
     "runtime/phase3.py",
+    "validation/phase5a.py",
 )
 
 # No expected answers or suite metadata enter this candidate-side adapter.
@@ -110,6 +113,49 @@ def validate_source(data):
         raise ValueError("source_encoding") from exc
 
 
+def validate_edit(base_source, candidate):
+    """Only one inert regex literal may change; all executable bytes are frozen.
+
+    This is task-specific patch admission, not a Python evaluator. In-process
+    Python cannot authenticate an API response from arbitrary hostile imports.
+    """
+    if candidate == base_source:
+        return
+    marker = b"_line_ending_re = re.compile("
+    end_marker = b",\n                             re.UNICODE)"
+    if base_source.count(marker) != 1:
+        raise ValueError("unsupported_edit_baseline")
+    start = base_source.index(marker) + len(marker)
+    end = base_source.index(end_marker, start)
+    prefix, suffix = base_source[:start], base_source[end:]
+    if not candidate.startswith(prefix) or not candidate.endswith(suffix):
+        raise ValueError("executable_source_changed")
+    literal = candidate[start : len(candidate) - len(suffix)]
+    if not 1 <= len(literal) <= 4096:
+        raise ValueError("pattern_literal_size")
+    try:
+        text = literal.decode("utf-8")
+        tokens = [
+            t
+            for t in tokenize.generate_tokens(io.StringIO(text).readline)
+            if t.type not in {tokenize.NEWLINE, tokenize.ENDMARKER}
+        ]
+        if (
+            len(tokens) != 1
+            or tokens[0].type != tokenize.STRING
+            or tokens[0].string != text
+        ):
+            raise ValueError("pattern_must_be_one_string_literal")
+        expression = ast.parse(text, mode="eval").body
+        if (
+            not isinstance(expression, ast.Constant)
+            or type(expression.value) is not str
+        ):
+            raise ValueError("pattern_must_be_string")
+    except (SyntaxError, tokenize.TokenError, UnicodeError) as exc:
+        raise ValueError("invalid_pattern_literal") from exc
+
+
 def admit(patch, base):
     """A replacement envelope, not general git apply. Only one regular source."""
     if len(patch) > MAX_SOURCE * 6:
@@ -130,6 +176,7 @@ def admit(patch, base):
             raise ValueError("patch_content")
         content = text.encode("utf-8")
         validate_source(content)
+        validate_edit(base[path], content)
         result[path] = content
     return result
 
@@ -283,9 +330,10 @@ def validate_suite(raw):
 def make_lock(snapshot, suite):
     cases = validate_suite(suite)
     return {
-        "contract_version": 1,
+        "contract_version": 2,
         "strategy": VERSION,
-        "threat_model": "separate-driver-visible-input-v1",
+        "threat_model": "frozen-api-inert-pattern-v1",
+        "edit_policy": EDIT_POLICY,
         "snapshot_sha256": digest(canonical(snapshot)),
         "suite_sha256": digest(suite),
         "mandatory_count": len(cases),
@@ -306,7 +354,7 @@ def check_lock(lock, expected, snapshot, suite):
 def verify(patch, *, archive, snapshot, suite, lock, expected_lock):
     """Return only controller-owned results; candidate sees one request at a time."""
     result = {
-        "contract_version": 1,
+        "contract_version": 2,
         "strategy": VERSION,
         "status": "invalid",
         "score": None,

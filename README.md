@@ -34,3 +34,6 @@ Phase 4 was explicitly approved and executed. See the [Phase 4 report](docs/phas
 
 
 Architecture v2 is approved with the Scenario Designer and extensible verifier amendments; see [approval history](docs/decisions/architecture-v2-approval.md). [Phase 5A](docs/phase-5a-report.md) qualifies a pinned real Boltons defect, narrow independent black-box verification and repository handoff. It makes no command-recovery or live-model claim. Phase 5B and later work require separate approval.
+
+
+Phase 5A review repairs use `black-box-json-v2`: only the task's inert regex literal may change, and qualification validates the externally approved scenario and every control patch. This is an explicit narrowing of accepted repairs, not general hostile-Python API attestation. See the report's review-correction section.

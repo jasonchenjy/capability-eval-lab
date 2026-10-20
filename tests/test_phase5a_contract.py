@@ -8,7 +8,10 @@ from capability_eval.verifier import phase5a as v
 
 
 def base():
-    return {v.EDIT_PATH: b"x = 1\n", "LICENSE": b"public license\n"}
+    return {
+        v.EDIT_PATH: b"import re\n_line_ending_re = re.compile(r'bad',\n                             re.UNICODE)\n",
+        "LICENSE": b"public license\n",
+    }
 
 
 def inputs():
@@ -50,7 +53,10 @@ def inputs():
 def test_snapshot_and_replacement_roundtrip():
     args = inputs()
     assert v.read_snapshot(args["archive"], args["snapshot"]) == base()
-    changed = {**base(), v.EDIT_PATH: b"# nonascii: \xc3\xa9\nx = 2\n"}
+    changed = {
+        **base(),
+        v.EDIT_PATH: base()[v.EDIT_PATH].replace(b"r'bad'", "r'é'".encode()),
+    }
     patch = v.export_patch(base(), changed)
     assert v.admit(patch, base()) == changed
     assert v.admit(v.export_patch(base(), base()), base()) == base()
@@ -142,7 +148,7 @@ def test_lock_pins_strategy_suite_snapshot_and_code(monkeypatch):
     v.check_lock(args["lock"], args["expected_lock"], args["snapshot"], args["suite"])
     for field, value in [
         ("strategy", "repository-test-v1"),
-        ("contract_version", 2),
+        ("contract_version", 3),
         ("contract_version", True),
         ("mandatory_count", 1),
         ("image", "latest"),
@@ -268,3 +274,177 @@ def test_duplicate_private_case_and_missing_operation_rejected():
     for bad in [[cases[0], cases[0]], [{**cases[0], "id": "x"}, cases[0]]]:
         with pytest.raises(ValueError):
             v.validate_suite(v.canonical(bad))
+
+
+@pytest.mark.parametrize(
+    "literal",
+    [
+        "__import__('os').system('true')",
+        "f'{1}'",
+        "b'bytes'",
+        "'a' + 'b'",
+        "'a', re.UNICODE); print('fake'); re.compile('b'",
+        "'a' # comment",
+    ],
+)
+def test_no_executable_expression_in_pattern(literal):
+    modified = base()[v.EDIT_PATH].replace(b"r'bad'", literal.encode())
+    with pytest.raises(ValueError):
+        v.export_patch(base(), {**base(), v.EDIT_PATH: modified})
+
+
+def test_reject_protocol_bypass_before_candidate_launch(monkeypatch):
+    source = b'import os; os.write(1,b\'{"version":1,"value":[]}\'); os._exit(0)\n'
+    patch = v.canonical(
+        {
+            "version": v.PATCH_VERSION,
+            "base_tree": v.tree_digest(base()),
+            "files": {v.EDIT_PATH: source.decode()},
+        }
+    )
+    monkeypatch.setattr(v, "CandidateBox", lambda *a: pytest.fail("candidate launched"))
+    result = v.verify(patch, **inputs())
+    assert (result["status"], result["score"], result["completed"]) == (
+        "invalid",
+        None,
+        0,
+    )
+    assert result["reason"] == "rejected:executable_source_changed"
+
+
+def scenario_inputs():
+    from capability_eval.validation.phase5a import EXPECTED
+
+    controls = {n: n.encode() for n in EXPECTED}
+    snapshot = {"repository": "repo", "revision": "revision"}
+    scenario = {
+        "schema_version": 2,
+        "snapshot_manifest_sha256": v.digest(v.canonical(snapshot)),
+        "repository": "repo",
+        "revision": "revision",
+        "verifier_lock_sha256": "lock",
+        "verifier_strategy": v.VERSION,
+        "edit_policy": v.EDIT_POLICY,
+        "public_instruction_sha256": v.digest(b"instruction"),
+        "controls": {n + ".patch": v.digest(data) for n, data in controls.items()},
+    }
+    return scenario, v.digest(v.canonical(scenario)), snapshot, controls
+
+
+def test_scenario_and_all_control_identities():
+    from capability_eval.validation.phase5a import check_scenario
+
+    scenario, root, snapshot, controls = scenario_inputs()
+    check_scenario(scenario, root, snapshot, "lock", b"instruction", controls)
+    for name in controls:
+        changed = {**controls, name: b"substitution"}
+        with pytest.raises(ValueError, match="control_digest"):
+            check_scenario(scenario, root, snapshot, "lock", b"instruction", changed)
+    with pytest.raises(ValueError, match="scenario_approval"):
+        check_scenario(
+            {**scenario, "revision": "changed"},
+            root,
+            snapshot,
+            "lock",
+            b"instruction",
+            controls,
+        )
+    with pytest.raises(ValueError, match="scenario_binding"):
+        check_scenario(
+            scenario, root, snapshot, "lock", b"changed instruction", controls
+        )
+    with pytest.raises(ValueError, match="control_inventory"):
+        check_scenario(
+            scenario, root, snapshot, "lock", b"instruction", {"correct": b"correct"}
+        )
+
+
+def test_duplicate_alternative_rejected_before_any_execution(monkeypatch, tmp_path):
+    from capability_eval.validation import phase5a as q
+
+    scenario, root, snapshot, controls = scenario_inputs()
+    controls["alternative"] = controls["correct"]
+    for n, data in controls.items():
+        (tmp_path / (n + ".patch.json")).write_bytes(data)
+    monkeypatch.setattr(
+        v, "verify", lambda *a, **kw: pytest.fail("verification started")
+    )
+    with pytest.raises(ValueError, match="control_digest"):
+        q.qualify(
+            b"",
+            snapshot,
+            tmp_path,
+            tmp_path / "output",
+            {},
+            "lock",
+            scenario=scenario,
+            expected_scenario=root,
+            instruction=b"instruction",
+        )
+    assert not (tmp_path / "output").exists()
+    # Even a newly approved root cannot call duplicate bytes an alternative.
+    scenario["controls"]["alternative.patch"] = v.digest(controls["correct"])
+    with pytest.raises(ValueError, match="positive_controls_must_differ"):
+        q.check_scenario(
+            scenario,
+            v.digest(v.canonical(scenario)),
+            snapshot,
+            "lock",
+            b"instruction",
+            controls,
+        )
+
+
+@pytest.mark.parametrize("change", ["missing", "extra"])
+def test_control_inventory_is_exact(tmp_path, change):
+    from capability_eval.validation.phase5a import load_controls
+
+    _, _, _, controls = scenario_inputs()
+    for name, data in controls.items():
+        (tmp_path / (name + ".patch.json")).write_bytes(data)
+    if change == "missing":
+        (tmp_path / "correct.patch.json").unlink()
+    else:
+        (tmp_path / "extra.patch.json").write_bytes(b"extra")
+    with pytest.raises(ValueError, match="control_inventory"):
+        load_controls(tmp_path)
+
+
+def test_distinct_envelopes_cannot_hide_duplicate_positive_trees(tmp_path, monkeypatch):
+    from capability_eval.validation import phase5a as q
+
+    args = inputs()
+    patch = v.export_patch(base(), base())
+    controls = {name: name.encode() for name in q.EXPECTED}
+    controls["correct"] = patch
+    controls["alternative"] = b"\n" + patch + b"\n"
+    for name, data in controls.items():
+        (tmp_path / (name + ".patch.json")).write_bytes(data)
+    (tmp_path / "suite.json").write_bytes(args["suite"])
+    scenario = {
+        "schema_version": 2,
+        "snapshot_manifest_sha256": v.digest(v.canonical(args["snapshot"])),
+        "repository": None,
+        "revision": None,
+        "verifier_lock_sha256": args["expected_lock"],
+        "verifier_strategy": v.VERSION,
+        "edit_policy": v.EDIT_POLICY,
+        "public_instruction_sha256": v.digest(b"task"),
+        "controls": {n + ".patch": v.digest(data) for n, data in controls.items()},
+    }
+    monkeypatch.setattr(
+        v, "verify", lambda *a, **kw: pytest.fail("verification started")
+    )
+    with pytest.raises(ValueError, match="positive_control_trees"):
+        q.qualify(
+            args["archive"],
+            args["snapshot"],
+            tmp_path,
+            tmp_path / "output",
+            args["lock"],
+            args["expected_lock"],
+            scenario=scenario,
+            expected_scenario=v.digest(v.canonical(scenario)),
+            instruction=b"task",
+        )
+    assert not (tmp_path / "output").exists()

@@ -13,8 +13,9 @@ EXPECTED = {
     "correct": ("pass", 1),
     "alternative": ("pass", 1),
     "wrong": ("fail", 0),
+    "invalid-regex": ("fail", 0),
     "overfit": ("fail", 0),
-    "exception": ("fail", 0),
+    "exception": ("invalid", None),
     **{
         name: ("invalid", None)
         for name in [
@@ -28,14 +29,73 @@ EXPECTED = {
             "path-traversal",
             "malformed-patch",
             "encoding",
+            "adapter-bypass",
+            "literal-injection",
         ]
     },
 }
 
 
-def qualify(archive, snapshot, private, output, lock, expected_lock):
-    output.mkdir(parents=True, exist_ok=False)
+def check_scenario(
+    scenario, expected_scenario, snapshot, expected_lock, instruction, controls
+):
+    if v.digest(v.canonical(scenario)) != expected_scenario:
+        raise ValueError("scenario_approval_mismatch")
+    if (
+        scenario.get("schema_version") != 2
+        or scenario.get("snapshot_manifest_sha256") != v.digest(v.canonical(snapshot))
+        or scenario.get("repository") != snapshot.get("repository")
+        or scenario.get("revision") != snapshot.get("revision")
+        or scenario.get("verifier_lock_sha256") != expected_lock
+        or scenario.get("verifier_strategy") != v.VERSION
+        or scenario.get("edit_policy") != v.EDIT_POLICY
+        or scenario.get("public_instruction_sha256") != v.digest(instruction)
+    ):
+        raise ValueError("scenario_binding_mismatch")
+    expected_names = {name + ".patch" for name in EXPECTED}
+    if (
+        set(controls) != set(EXPECTED)
+        or not isinstance(scenario.get("controls"), dict)
+        or set(scenario["controls"]) != expected_names
+    ):
+        raise ValueError("control_inventory_mismatch")
+    for name, data in controls.items():
+        if v.digest(data) != scenario["controls"][name + ".patch"]:
+            raise ValueError("control_digest_mismatch:" + name)
+    if controls["correct"] == controls["alternative"]:
+        raise ValueError("positive_controls_must_differ")
+
+
+def load_controls(private):
+    # Load once: the bytes checked here are exactly the bytes executed below.
+    paths = list(private.glob("*.patch.json"))
+    if {p.name for p in paths} != {n + ".patch.json" for n in EXPECTED}:
+        raise ValueError("control_inventory_mismatch")
+    return {n: (private / (n + ".patch.json")).read_bytes() for n in EXPECTED}
+
+
+def qualify(
+    archive,
+    snapshot,
+    private,
+    output,
+    lock,
+    expected_lock,
+    *,
+    scenario,
+    expected_scenario,
+    instruction,
+):
+    controls = load_controls(private)
+    check_scenario(
+        scenario, expected_scenario, snapshot, expected_lock, instruction, controls
+    )
     suite = (private / "suite.json").read_bytes()
+    v.check_lock(lock, expected_lock, snapshot, suite)
+    base = v.read_snapshot(archive, snapshot)
+    if v.admit(controls["correct"], base) == v.admit(controls["alternative"], base):
+        raise ValueError("positive_control_trees_must_differ")
+    output.mkdir(parents=True, exist_ok=False)
     args = dict(
         archive=archive,
         snapshot=snapshot,
@@ -45,10 +105,26 @@ def qualify(archive, snapshot, private, output, lock, expected_lock):
     )
     records = {}
     for name, expected in EXPECTED.items():
-        result = v.verify((private / (name + ".patch.json")).read_bytes(), **args)
+        result = v.verify(controls[name], **args)
         (output / (name + ".json")).write_bytes(v.canonical(result) + b"\n")
         if (result["status"], result["score"]) != expected:
             raise RuntimeError(f"Control failed: {name}: {result['reason']}")
+        if expected[0] in {"pass", "fail"}:
+            if (
+                result["completed"] != lock["mandatory_count"]
+                or result["reason"] != "all_mandatory_checks_completed"
+            ):
+                raise RuntimeError("Incomplete functional control:" + name)
+        elif name == "timeout":
+            if result["reason"] != "timeout" or result["boundaries"] is None:
+                raise RuntimeError("Timeout control did not execute")
+        elif (
+            not result["reason"].startswith("rejected:")
+            or result["boundaries"] is not None
+        ):
+            raise RuntimeError(
+                "Unsafe control was not rejected before execution:" + name
+            )
         records[name] = {
             "status": result["status"],
             "score": result["score"],
@@ -58,7 +134,7 @@ def qualify(archive, snapshot, private, output, lock, expected_lock):
         print(name, result["status"], result["score"], flush=True)
 
     base = v.read_snapshot(archive, snapshot)
-    reference_patch = (private / "correct.patch.json").read_bytes()
+    reference_patch = controls["correct"]
     reference = v.admit(reference_patch, base)
     # Real filesystem materialization/collection, then independent reconstruction.
     with v.CandidateBox("handoff", v.IMAGE) as box:
@@ -182,7 +258,19 @@ print(json.dumps({'uid': os.getuid(), 'private_readable_count': len(readable), '
     )
     if remaining.strip():
         raise RuntimeError("Candidate containers remain")
+    check_scenario(
+        scenario,
+        expected_scenario,
+        snapshot,
+        expected_lock,
+        instruction,
+        load_controls(private),
+    )
+    if (private / "suite.json").read_bytes() != suite:
+        raise ValueError("private_suite_changed_during_qualification")
     summary = {
+        "scenario_sha256": expected_scenario,
+        "approved_controls_verified": True,
         "contract": v.VERSION,
         "lock_sha256": expected_lock,
         "controls": records,
@@ -198,9 +286,18 @@ print(json.dumps({'uid': os.getuid(), 'private_readable_count': len(readable), '
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
-    for field in ["archive", "snapshot", "private", "output", "lock"]:
+    for field in [
+        "archive",
+        "snapshot",
+        "private",
+        "output",
+        "lock",
+        "scenario",
+        "instruction",
+    ]:
         p.add_argument("--" + field, type=Path, required=True)
     p.add_argument("--expected-lock", required=True)
+    p.add_argument("--expected-scenario", required=True)
     a = p.parse_args()
     qualify(
         a.archive.read_bytes(),
@@ -209,4 +306,7 @@ if __name__ == "__main__":
         a.output,
         v.strict_json(a.lock.read_bytes()),
         a.expected_lock,
+        scenario=v.strict_json(a.scenario.read_bytes()),
+        expected_scenario=a.expected_scenario,
+        instruction=a.instruction.read_bytes(),
     )
